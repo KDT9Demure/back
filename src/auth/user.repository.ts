@@ -2,6 +2,7 @@ import { EntityRepository, Repository, DataSource } from "typeorm";
 import { User } from "./user.entity";
 import { AuthCrendentialDto } from "./dto/auth.credential.dto";
 import { UserStatus } from "./status/user.status.enum";
+import * as bcrypt from "bcryptjs";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
@@ -11,8 +12,13 @@ export class UserRepository extends Repository<User>{
 
     async createUser(authCrendentialDto:AuthCrendentialDto):Promise<object>{
         const {userid, user_name, password, email} = authCrendentialDto;
+        
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+        
         const user = this.create({
-            userid, user_name, password, email,
+            userid, user_name, email,
+            password:hashedPassword,
             grade:UserStatus.NORMAL,
             point:0
         })
@@ -27,7 +33,7 @@ export class UserRepository extends Repository<User>{
             }
             return {retult:false, message};
         }
-
-        
     }
+
+    
 }
