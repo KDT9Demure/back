@@ -5,6 +5,7 @@ import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { User } from './user.entity';
+import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 
 
 @Controller('user')
@@ -25,5 +26,10 @@ export class AuthController {
     @UseGuards(AuthGuard())
     tokenCheck(@GetUser() user:User){
         return user;
+    }
+
+    @Post('/duplicate')
+    idDuplicationCheck(@Body(ValidationPipe) authUserCrendentialDto:AuthUserCrendentialDto):Promise<object>{
+        return this.authService.idDuplicationCheck(authUserCrendentialDto);
     }
 }

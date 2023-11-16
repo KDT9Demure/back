@@ -5,6 +5,7 @@ import { AuthCrendentialDto } from './dto/auth.credential.dto';
 import * as bcrypt from "bcryptjs";
 import { JwtService } from '@nestjs/jwt/dist';
 import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
+import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 
 @Injectable()
 export class AuthService {
@@ -33,6 +34,18 @@ export class AuthService {
             return {result:false, message:"로그인 실패"}
         }
         
+    }
+
+    async idDuplicationCheck(authUserCrendentialDto:AuthUserCrendentialDto):Promise<object>{
+        const {userid} = authUserCrendentialDto;
+        
+        const user = await this.userRepository.findOne({where:{userid}});
+
+        if(!user){
+            return {result:true}
+        }else{
+            return {result:false}
+        }
     }
 
 }
