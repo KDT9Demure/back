@@ -7,6 +7,10 @@ import { UserRepository } from './user.repository';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { MailService } from './mail.service';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { MailModule } from './mail.module';
 
 
 @Module({
@@ -18,7 +22,8 @@ import { JwtStrategy } from './jwt.strategy';
         expiresIn:3600
       }
     }),
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
+    MailModule
   ],
   controllers: [AuthController],
   providers: [AuthService, UserRepository, JwtStrategy],

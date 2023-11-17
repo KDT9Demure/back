@@ -6,11 +6,13 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
 import { User } from './user.entity';
 import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
+import { MailService } from './mail.service';
+import { SignupEmailCrendentialDto } from './dto/signup-email.credential.dto';
 
 
 @Controller('user')
 export class AuthController {
-    constructor(private authService:AuthService){}
+    constructor(private authService:AuthService, private mainService:MailService){}
 
     @Post('/signup')
     signUp(@Body(ValidationPipe) authCrendentialDto:AuthCrendentialDto):Promise<object>{
@@ -32,4 +34,10 @@ export class AuthController {
     idDuplicationCheck(@Body(ValidationPipe) authUserCrendentialDto:AuthUserCrendentialDto):Promise<object>{
         return this.authService.idDuplicationCheck(authUserCrendentialDto);
     }
+
+    @Post('/email')
+    sendMail(@Body(ValidationPipe) signupEmailCrendentialDto:SignupEmailCrendentialDto):Promise<object>{
+        return this.mainService.sendHello(signupEmailCrendentialDto);
+    }
+
 }
