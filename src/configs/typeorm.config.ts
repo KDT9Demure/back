@@ -9,7 +9,7 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     password:'pyjsok5253!',
     database:'demure',
     entities:[__dirname + '../**/*.entity.{js, ts}', User],
-    synchronize: true,
+    synchronize: false,
     ssl:{
         rejectUnauthorized:false
     }
