@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport"
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserRepository } from "./user.repository";
+import { UserRepository } from "../repository/user.repository";
 import { User } from "../entity/user.entity";
 
 // 다른데서도 주입해서 사용할 수 있게 Injectable()
