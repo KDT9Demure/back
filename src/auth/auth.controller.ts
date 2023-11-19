@@ -4,7 +4,7 @@ import { AuthCrendentialDto } from './dto/auth.credential.dto';
 import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user.decorator';
-import { User } from './user.entity';
+import { User } from '../entity/user.entity';
 import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { MailService } from './mail.service';
 import { SignupEmailCrendentialDto } from './dto/signup-email.credential.dto';
@@ -12,7 +12,7 @@ import { SignupEmailCrendentialDto } from './dto/signup-email.credential.dto';
 
 @Controller('user')
 export class AuthController {
-    constructor(private authService:AuthService, private mainService:MailService){}
+    constructor(private authService:AuthService, private mailService:MailService){}
 
     @Post('/signup')
     signUp(@Body(ValidationPipe) authCrendentialDto:AuthCrendentialDto):Promise<object>{
@@ -37,7 +37,7 @@ export class AuthController {
 
     @Post('/email')
     sendMail(@Body(ValidationPipe) signupEmailCrendentialDto:SignupEmailCrendentialDto):Promise<object>{
-        return this.mainService.sendHello(signupEmailCrendentialDto);
+        return this.mailService.sendHello(signupEmailCrendentialDto);
     }
 
 }
