@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from './user.repository';
+import { UserRepository } from '../repository/user.repository';
 import { AuthCrendentialDto } from './dto/auth.credential.dto';
 import * as bcrypt from "bcryptjs";
 import { JwtService } from '@nestjs/jwt/dist';
