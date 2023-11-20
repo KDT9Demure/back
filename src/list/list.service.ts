@@ -15,7 +15,7 @@ export class ListService{
         });
         for(let i =0;i<categories.length;i++){
             const categoryEntity = await this.goodsRepository.find({
-                where: { id: categories[i].goods_id },
+                where: { id: String(categories[i].goods_id) },
             });
             arr.push(categoryEntity)
         }

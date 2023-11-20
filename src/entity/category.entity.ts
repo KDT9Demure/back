@@ -3,16 +3,14 @@ import {Goods} from "./goods.entity";
 
 @Entity({name: 'category'})
 export class Category extends BaseEntity{
-    @PrimaryColumn()
-    goods_id: string;
-
     @Column()
     name: string;
 
     @PrimaryColumn()
     id: string;
 
+    // @PrimaryColumn()
     @ManyToOne(()=>Goods,(goods)=>goods.categories)
     @JoinColumn({ name: 'goods_id' })
-    goods: Goods
+    goods_id: Goods
 }
