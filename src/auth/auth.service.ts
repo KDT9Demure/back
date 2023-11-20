@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from '../repository/user.repository';
 import { AuthCrendentialDto } from './dto/auth.credential.dto';
 import * as bcrypt from "bcryptjs";
 import { JwtService } from '@nestjs/jwt/dist';
 import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
 import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
+import { UserRepository } from 'src/repository/user.repository';
 
 @Injectable()
 export class AuthService {
@@ -37,15 +37,20 @@ export class AuthService {
     }
 
     async idDuplicationCheck(authUserCrendentialDto:AuthUserCrendentialDto):Promise<object>{
-        const {userid} = authUserCrendentialDto;
-        
-        const user = await this.userRepository.findOne({where:{userid}});
+        try{
+            const {userid} = authUserCrendentialDto;
+            const user = await this.userRepository.findOne({where:{userid}});
 
-        if(!user){
-            return {result:true}
-        }else{
-            return {result:false}
+            if(!user){
+                return {result:true}
+            }else{
+                return {result:false}
+            }
+        }catch(err){
+            console.log(err);
+            return {result:false, message:"오류가 발생했습니다."}
         }
+        
     }
 
 }

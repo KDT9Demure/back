@@ -1,8 +1,8 @@
 import { EntityRepository, Repository, DataSource } from "typeorm";
-import { User } from "../entity/user.entity";
 import { AuthCrendentialDto } from "../auth/dto/auth.credential.dto";
 import { UserStatus } from "../auth/status/user.status.enum";
 import * as bcrypt from "bcryptjs";
+import { User } from "src/entity/user.entity";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
