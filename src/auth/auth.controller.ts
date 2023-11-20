@@ -1,4 +1,4 @@
-import { Controller, Post, Body, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, UseGuards, Patch, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCrendentialDto } from './dto/auth.credential.dto';
 import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
@@ -8,6 +8,7 @@ import { User } from '../entity/user.entity';
 import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { MailService } from './mail.service';
 import { SignupEmailCrendentialDto } from './dto/signup-email.credential.dto';
+import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 
 
 @Controller('user')
@@ -38,6 +39,16 @@ export class AuthController {
     @Post('/email')
     sendMail(@Body(ValidationPipe) signupEmailCrendentialDto:SignupEmailCrendentialDto):Promise<object>{
         return this.mailService.sendHello(signupEmailCrendentialDto);
+    }
+
+    @Patch('/update')
+    updateUser(@Body(ValidationPipe) updateUserCrendentialDto:UpdateUserCrendentialDto):Promise<object>{
+        return this.authService.updateUser(updateUserCrendentialDto)
+    }
+
+    @Delete('/update')
+    deleteUser(@Body() id:number):Promise<object>{
+        return this.authService.deleteUser(id);
     }
 
 }

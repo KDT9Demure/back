@@ -6,8 +6,8 @@ import {ListService} from "./list.service";
 export class ListController{
     constructor(private listService: ListService) {}
 
-    @Get('/:category/')
-    getGoodsByCategory(@Param('category') category:string,@Body('page')page: number): Promise<Goods[]>{
+    @Post('/:category/')
+    getGoodsByCategory(@Param('category') category:string, @Body('page')page: number): Promise<Goods[]>{
         return this.listService.getGoodsByCategory(category,page);
     }
 

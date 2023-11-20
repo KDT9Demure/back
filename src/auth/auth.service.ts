@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt/dist';
 import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
 import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { UserRepository } from 'src/repository/user.repository';
+import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 
 @Injectable()
 export class AuthService {
@@ -49,8 +50,33 @@ export class AuthService {
         }catch(err){
             console.log(err);
             return {result:false, message:"오류가 발생했습니다."}
+        }   
+    }
+
+    async updateUser(updateUserCrendentialDto:UpdateUserCrendentialDto):Promise<object>{
+        try{
+            const {id, user_name, password} = updateUserCrendentialDto;
+
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(password, salt);
+
+            const user = await this.userRepository.update(id, {user_name, password:hashedPassword});
+
+            return {result:true}
+
+        }catch(err){
+            return {result:false, message:"오류가 발생했습니다. "+ err}
         }
-        
+    }
+
+    async deleteUser(id:number):Promise<object>{
+        try{
+            const user = await this.userRepository.delete(id);
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false, message:"오류가 발생했습니다. " + err};
+        }
     }
 
 }
