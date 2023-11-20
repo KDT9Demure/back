@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, ManyToOne } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, ManyToOne, JoinColumn } from "typeorm";
 import { Answer } from "./answer.entity";
 import { User } from "./user.entity";
 
@@ -27,6 +27,7 @@ export class Question extends BaseEntity{
     @OneToOne(type => Answer, answer => answer.question_id)
     answer:Answer;
 
-    @ManyToOne(type=> User, user=>user.questions)
-    user_id:number;
+    @ManyToOne(type=> User, user=>user.questions, {eager:true})
+    @JoinColumn({name: 'user_id'})
+    user_id:User;
 }
