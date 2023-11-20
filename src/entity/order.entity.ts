@@ -29,8 +29,8 @@ export class Order extends BaseEntity{
     @Column()
     delivery_status:string;
 
-    @ManyToOne(type=> User, user=>user.orders, {eager:false})
-    user_id:number;
+    @ManyToOne(type=> User, user=>user.orders)
+    user_id:User;
 
     // @ManyToOne() goods_id
 

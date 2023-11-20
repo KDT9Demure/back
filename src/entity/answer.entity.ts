@@ -14,6 +14,6 @@ export class Answer extends BaseEntity{
     })
     create_date:Date;
 
-    @OneToOne(type => Question, question => question.answer, {eager:false})
+    @OneToOne(type => Question, question => question.answer)
     question_id:number;
 }

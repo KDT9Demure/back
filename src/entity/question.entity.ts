@@ -24,9 +24,9 @@ export class Question extends BaseEntity{
     @Column()
     answer_status:boolean;
 
-    @OneToOne(type => Answer, answer => answer.question_id, {eager:true})
+    @OneToOne(type => Answer, answer => answer.question_id)
     answer:Answer;
 
-    @ManyToOne(type=> User, user=>user.questions, {eager:false})
-    user_id:number;
+    // @ManyToOne(type=> User, user=>user.questions, {eager:false})
+    // user_id:number;
 }

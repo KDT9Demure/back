@@ -27,10 +27,10 @@ export class User extends BaseEntity{
     @Column()
     point:number
 
-    @OneToMany(type => Order, order => order.user_id, {eager:true})
+    @OneToMany(type => Order, order => order.user_id,)
     orders:Order[];
 
-    @OneToMany(type => Question, question => question.user_id, {eager:true})
-    questions:Question[];
+    // @OneToMany(type => Question, question => question.user_id, {eager:true})
+    // questions:Question[];
 
 }
