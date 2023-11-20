@@ -12,4 +12,8 @@ export class QuestionService {
         @InjectRepository(AnswerRepository)
         private answerRepository:AnswerRepository,
     ){}
+
+    async getQuestion(){
+        
+    }
 }
