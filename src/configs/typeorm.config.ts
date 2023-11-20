@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { User } from "src/entity/user.entity";
-import {Category, Goods} from "../entity/product.entity";
+import {Category, Goods} from "../entity/goods.entity";
 import { Order } from "src/entity/order.entity";
 import { Coupon } from "src/entity/coupon.entity";
 import { Address } from "src/entity/address.entity";

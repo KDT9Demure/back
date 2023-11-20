@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CouponRepository } from 'src/repository/coupon.repository';
-import { ProductRepository } from 'src/repository/product.repository';
+import { CategoryRepository } from 'src/repository/category.repository';
 
 @Injectable()
 export class EventService {
@@ -9,7 +9,7 @@ export class EventService {
         @InjectRepository(CouponRepository)
         private couponRepository:CouponRepository,
         
-        @InjectRepository(ProductRepository)
-        private productRepository:ProductRepository,
+        @InjectRepository(CategoryRepository)
+        private productRepository:CategoryRepository,
     ){}
 }
