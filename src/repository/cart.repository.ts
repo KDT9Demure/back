@@ -42,5 +42,16 @@ export class CartRepository extends Repository<Cart>{
         return {result: true}
     }
 
+    async deleteCart(id:number):Promise<object>{
+        try {
+            const cart = await this.delete(id)
+            return {result:true}
+        }
+        catch (error){
+            console.log(error);
+            return {result: false}
+        }
+    }
+
     
 }
