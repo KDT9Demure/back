@@ -11,4 +11,9 @@ export class CartController {
     addCart(@Body() cartCredentialDto: CartCredentialDto){
         return this.cartService.addCart(cartCredentialDto)
     }
+
+    @Post('/delete')
+    delteCart(@Body() id: number):Promise<object>{
+        return this.cartService.deleteCart(id)
+    }
 }

@@ -13,4 +13,8 @@ export class CartService {
     async addCart(cartCredentialDto: CartCredentialDto):Promise<object>{
         return this.cartRepository.addCart(cartCredentialDto);
     }
+
+    async deleteCart(id: number):Promise<object>{
+        return this.cartRepository.deleteCart(id)
+    }
 }
