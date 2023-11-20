@@ -22,6 +22,7 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     database:'demure',
     entities:[__dirname + '../**/*.entity.{js, ts}', User, Goods, Order, Coupon, Address, Buy, Answer, Cart, D_pay, Question, Review, User_coupon, Category],
     synchronize: false,
+    logging:true,
     ssl:{
         rejectUnauthorized:false
     }
