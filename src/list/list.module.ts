@@ -1,15 +1,13 @@
-import { Module } from '@nestjs/common';
-import { ListController } from './list.controller';
-import { ListService } from './list.service';
-import { CategoryRepository } from 'src/repository/category.repository';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Category } from 'src/entity/category.entity';
+import {Module} from "@nestjs/common";
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {CategoryRepository} from "../repository/category.repository";
+import {GoodsRepository} from "../repository/goods.repository";
+import {ListController} from "./list.controller";
+import {ListService} from "./list.service";
 
 @Module({
-  imports:[
-    TypeOrmModule.forFeature([Category]),
-  ],
+  imports:[TypeOrmModule.forFeature([CategoryRepository,GoodsRepository])],
   controllers: [ListController],
-  providers: [ListService, CategoryRepository]
+  providers: [ListService,CategoryRepository,GoodsRepository]
 })
-export class ListModule {}
+export class ListModule{}
