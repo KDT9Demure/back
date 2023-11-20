@@ -10,6 +10,6 @@ export class EventService {
         private couponRepository:CouponRepository,
         
         @InjectRepository(CategoryRepository)
-        private productRepository:CategoryRepository,
+        private categoryRepository:CategoryRepository,
     ){}
 }

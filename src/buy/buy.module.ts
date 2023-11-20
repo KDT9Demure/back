@@ -9,7 +9,7 @@ import { BuyRepository } from 'src/repository/buy.repository';
   imports:[
     TypeOrmModule.forFeature([Buy]),
   ],
-  controllers: [BuyController, BuyRepository],
-  providers: [BuyService]
+  controllers: [BuyController],
+  providers: [BuyService, BuyRepository]
 })
 export class BuyModule {}

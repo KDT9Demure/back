@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {CategoryRepository} from "../repository/category.repository";
-import {Category, Goods} from "../entity/goods.entity";
+import {Goods} from "../entity/goods.entity";
 import {GoodsRepository} from "../repository/goods.repository";
 let arr =[];
 @Injectable()

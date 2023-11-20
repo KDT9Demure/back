@@ -1,5 +1,5 @@
 import {DataSource, EntityRepository, Repository} from "typeorm";
-import {Category, Goods} from "../entity/goods.entity";
+import {Goods} from "../entity/goods.entity";
 
 @EntityRepository(Goods)
 export class GoodsRepository extends Repository<Goods>{
