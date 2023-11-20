@@ -6,9 +6,9 @@ import {Goods} from "../entity/goods.entity";
 export class ProductController{
     constructor(private productService: ProductService) {}
 
-    @Get('/:category')
-    getGoodsByCategory(@Param('category') category:string): Promise<Goods[]>{
-        return this.productService.getGoodsByCategory(category);
-    }
+    // @Get('/:category')
+    // getGoodsByCategory(@Param('category') category:string): Promise<Goods[]>{
+    //     return this.productService.getGoodsByCategory(category);
+    // }
 
 }
