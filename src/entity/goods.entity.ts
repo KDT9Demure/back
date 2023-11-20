@@ -5,7 +5,8 @@ import {
     OneToMany,
     PrimaryColumn
 } from "typeorm";
-import {Category} from "./category.entity";
+import { Category } from "./category.entity";
+
 
 
 @Entity()

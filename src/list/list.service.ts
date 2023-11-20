@@ -6,6 +6,6 @@ import { CategoryRepository } from 'src/repository/category.repository';
 export class ListService {
     constructor(
         @InjectRepository(CategoryRepository)
-        private productRepository:CategoryRepository,
+        private categoryRepository:CategoryRepository,
     ){}
 }
