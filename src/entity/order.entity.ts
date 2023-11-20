@@ -1,5 +1,6 @@
 import { User } from "src/entity/user.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Goods } from "./goods.entity";
 
 @Entity()
 export class Order extends BaseEntity{
@@ -32,6 +33,6 @@ export class Order extends BaseEntity{
     @ManyToOne(type=> User, user=>user.orders)
     user_id:User;
 
-    // @ManyToOne() goods_id
-
+    @ManyToOne(type=> Goods, goods=>goods.orders)
+    goods_id:Goods;
 }

@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user.entity";
+import { Goods } from "./goods.entity";
 
 @Entity()
 export class User_coupon extends BaseEntity{
@@ -8,7 +10,9 @@ export class User_coupon extends BaseEntity{
     @Column()
     use:boolean;
 
-    // user_id 조인
+    @ManyToOne(type=> User, user=>user.user_coupons)
+    user_id:User;
 
-    // goods_id 조인
+    @ManyToOne(type=> Goods, goods=>goods.user_coupons)
+    goods_id:Goods;
 }

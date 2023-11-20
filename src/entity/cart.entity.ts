@@ -1,4 +1,6 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "./user.entity";
+import { Goods } from "./goods.entity";
 
 @Entity()
 export class Cart extends BaseEntity{
@@ -10,5 +12,10 @@ export class Cart extends BaseEntity{
 
 
     // user_id 조인
+    @ManyToOne(type=> User, user=>user.carts)
+    user_id:User;
+
     // goods_id 조인
+    @ManyToOne(type=> Goods, goods=>goods.carts)
+    goods_id:Goods;
 }

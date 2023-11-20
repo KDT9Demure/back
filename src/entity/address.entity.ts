@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user.entity";
 
 @Entity()
 export class Address extends BaseEntity{
@@ -17,5 +18,6 @@ export class Address extends BaseEntity{
     @Column()
     address_name:string;
 
-    // user_id 와 조인
+    @ManyToOne(type=> User, user=>user.address)
+    user_id:User;
 }

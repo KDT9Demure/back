@@ -27,6 +27,6 @@ export class Question extends BaseEntity{
     @OneToOne(type => Answer, answer => answer.question_id)
     answer:Answer;
 
-    // @ManyToOne(type=> User, user=>user.questions, {eager:false})
-    // user_id:number;
+    @ManyToOne(type=> User, user=>user.questions)
+    user_id:number;
 }

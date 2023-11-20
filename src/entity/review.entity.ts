@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from "typeorm";
+import { User } from "./user.entity";
+import { Goods } from "./goods.entity";
 
 @Entity()
 export class Review extends BaseEntity{
@@ -16,7 +18,9 @@ export class Review extends BaseEntity{
     })
     create_date:Date;
 
-    // user_id 조인
+    @ManyToOne(type=> User, user=>user.reviews)
+    user_id:User;
 
-    // goods_id 조인
+    @ManyToOne(type=> Goods, goods=>goods.reviews)
+    goods_id:Goods;
 }
