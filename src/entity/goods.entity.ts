@@ -2,14 +2,11 @@ import {
     BaseEntity,
     Column,
     Entity,
-    JoinColumn,
-    ManyToOne,
     OneToMany,
-    PrimaryColumn,
-    PrimaryGeneratedColumn,
-    Unique
+    PrimaryColumn
 } from "typeorm";
-// import {Unique} from "typeorm/browser";
+import {Category} from "./category.entity";
+
 
 @Entity()
 export class Goods extends BaseEntity{
@@ -45,19 +42,4 @@ export class Goods extends BaseEntity{
 
 }
 
-@Entity({name: 'category'})
-// @Unique(['id','goods_id'])
-export class Category extends BaseEntity{
-    @PrimaryColumn()
-    goods_id: string;
 
-    @Column()
-    name: string;
-
-    @PrimaryColumn()
-    id: string;
-
-    @ManyToOne(()=>Goods,(goods)=>goods.categories)
-    @JoinColumn({ name: 'goods_id' })
-    goods: Goods
-}

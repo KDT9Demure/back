@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductRepository } from 'src/repository/product.repository';
+import { CategoryRepository } from 'src/repository/category.repository';
 
 @Injectable()
 export class ListService {
     constructor(
-        @InjectRepository(ProductRepository)
-        private productRepository:ProductRepository,
+        @InjectRepository(CategoryRepository)
+        private productRepository:CategoryRepository,
     ){}
 }

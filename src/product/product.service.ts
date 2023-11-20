@@ -1,14 +1,14 @@
 import {Injectable} from "@nestjs/common";
-import {ProductRepository} from "../repository/product.repository";
-import {Category, Goods} from "../entity/product.entity";
-import {GoodsRepository} from "./goods.repository";
+import {CategoryRepository} from "../repository/category.repository";
+import {Category, Goods} from "../entity/goods.entity";
+import {GoodsRepository} from "../repository/goods.repository";
 let arr =[];
 @Injectable()
 export class ProductService{
-    constructor(private productRepository: ProductRepository,private goodsRepository:GoodsRepository) {}
+    constructor(private categoryRepository: CategoryRepository, private goodsRepository:GoodsRepository) {}
 
     async getGoodsByCategory(category : string): Promise<Goods[]>{
-        const categories = await this.productRepository.find({
+        const categories = await this.categoryRepository.find({
             where: { id: category },
         });
         for(let i =0;i<categories.length;i++){
@@ -19,16 +19,5 @@ export class ProductService{
         }
 
         return arr;
-        // const categories = await this.productRepository
-        //     .createQueryBuilder('category')
-        //     .leftJoinAndSelect('category.goods', 'goods')
-        //     .where({ id: category })
-        //     .getMany();
-        //
-        // if (!categories || categories.length === 0) {
-        //     throw new Error("Category not found");
-        // }
-
-        // return categories.map(category => category.goods).flat();
     }
 }
