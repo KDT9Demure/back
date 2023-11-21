@@ -43,6 +43,9 @@ export class Goods extends BaseEntity{
     @Column()
     url: string
 
+    @Column()
+    count: number;
+
     @OneToMany(()=>Category,(category)=>category.goods_id)
     categories : Category[];
 
