@@ -2,10 +2,8 @@ import {Injectable} from "@nestjs/common";
 import {CategoryRepository} from "../repository/category.repository";
 import {Goods} from "../entity/goods.entity";
 import {GoodsRepository} from "../repository/goods.repository";
-import { Category } from "src/entity/category.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-
+import {Category} from "../entity/category.entity";
+let goodsArr =[];
 @Injectable()
 export class ListService{
     constructor(
@@ -18,15 +16,29 @@ export class ListService{
 
         console.log("page", page, "category", category);
 
-        // let arr =[];
-        const [test, categories] = await this.categoryRepository.findAndCount({
-           // where: { id: category },
-            order: {id: 'ASC'},
-           // take: 20,
-           // skip: (page - 1) * 20,
+
+    async getGoodsByCategory(category : string, page:number  ): Promise<Category[]>{
+        const categories = await this.categoryRepository.find({
+            where: { id: category },
+            take: 20,
+            skip:(page-1)*20
         });
         console.log(categories)
-
-        return test;
+        // let s ='';
+        // if(sort === "ASC"){
+        //     s = 'ASC';
+        // }else if(sort==="DESC"){
+        //     s = 'DESC';
+        // }else if (sort === ""){
+        //
+        // }
+        // for(let i =0;i<categories.length;i++){
+        //     const categoryEntity = await this.goodsRepository.find({
+        //         where: { id: String(categories[i].goods_id) },
+        //         // order: {price: s}
+        //     });
+        //     goodsArr.push(categoryEntity);
+        // }
+        return categories;
     }
 }

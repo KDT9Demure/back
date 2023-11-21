@@ -22,23 +22,7 @@ export class CartRepository extends Repository<Cart>{
             goods_count: goods_count,
             goods_id :goods_id
         })
-        // await this.save([{
-        //     user_id: user.id,
-        //     goods_count: goods_count,
-        //     goods_id : goods.id
-        // }]);
         await this.save(cart)
-        // if (user && goods) {
-        //     await this.save([{
-        //         user_id: user,
-        //         goods_count: goods_count,
-        //         goods_id: goods
-        //     }]);
-        //     return { result: true };
-        // } else {
-        //     return { result: false, message: 'User or goods not found.' };
-        // }
-
         return {result: true}
     }
 
