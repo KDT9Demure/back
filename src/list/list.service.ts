@@ -1,35 +1,36 @@
 import {Injectable} from "@nestjs/common";
 import {CategoryRepository} from "../repository/category.repository";
-import {Goods} from "../entity/goods.entity";
-import {GoodsRepository} from "../repository/goods.repository";
 import {Category} from "../entity/category.entity";
-let goodsArr =[];
+import { Repository} from "typeorm";
+import {InjectRepository} from "@nestjs/typeorm";
 @Injectable()
 export class ListService{
-    constructor(private categoryRepository: CategoryRepository, private goodsRepository:GoodsRepository) {}
+    constructor(
+        @InjectRepository(CategoryRepository)
+        private readonly categoryRepository: Repository<Category>
+    ) {}
 
-    async getGoodsByCategory(category : string, page:number  ): Promise<Category[]>{
-        const categories = await this.categoryRepository.find({
-            where: { id: category },
-            take: 20,
-            skip:(page-1)*20
-        });
-        console.log(categories)
-        // let s ='';
-        // if(sort === "ASC"){
-        //     s = 'ASC';
-        // }else if(sort==="DESC"){
-        //     s = 'DESC';
-        // }else if (sort === ""){
-        //
-        // }
-        // for(let i =0;i<categories.length;i++){
-        //     const categoryEntity = await this.goodsRepository.find({
-        //         where: { id: String(categories[i].goods_id) },
-        //         // order: {price: s}
-        //     });
-        //     goodsArr.push(categoryEntity);
-        // }
+    async getGoodsByCategory(category : string, page:number ,sort:string ): Promise<Category[]>{
+
+        const order: { [key: string]: 'ASC' | 'DESC' } = {};
+        if (sort === "low") {
+            order['goods.price'] = 'ASC';
+        } else if(sort === "high"){
+            order['goods.price'] = 'DESC';
+        } else if(sort === "best"){
+            order['goods.count'] = 'DESC'
+        } else if(sort === undefined){
+            order['goods.count'] = 'DESC'
+        }
+        const categories = await this.categoryRepository
+            .createQueryBuilder('category')
+            .leftJoinAndSelect('category.goods_id', 'goods')
+            .where('category.id = :category', { category })
+            .orderBy(order)
+            .skip((page - 1) * 20)
+            .take(20)
+            .getMany();
+
         return categories;
     }
 }
