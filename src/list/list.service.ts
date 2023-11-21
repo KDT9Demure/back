@@ -6,6 +6,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 @Injectable()
 export class ListService{
     constructor(
+
         @InjectRepository(CategoryRepository)
         private readonly categoryRepository: Repository<Category>
     ) {}
@@ -30,6 +31,7 @@ export class ListService{
             .skip((page - 1) * 20)
             .take(20)
             .getMany();
+
 
         return categories;
     }
