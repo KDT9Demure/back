@@ -1,12 +1,5 @@
-import {
-    BaseEntity,
-    Column,
-    Entity,
-    OneToMany,
-    PrimaryColumn
-} from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { Category } from "./category.entity";
-import { Buy } from "./buy.entity";
 import { Cart } from "./cart.entity";
 import { Order } from "./order.entity";
 import { Review } from "./review.entity";
@@ -48,9 +41,6 @@ export class Goods extends BaseEntity{
 
     @OneToMany(()=>Category,(category)=>category.goods_id)
     categories : Category[];
-
-    @OneToMany(()=>Buy,(buy)=>buy.goods_id)
-    buys : Buy[];
 
     @OneToMany(()=>Cart,(cart)=>cart.goods_id)
     carts : Cart[];
