@@ -12,7 +12,7 @@ export class AnswerRepository extends Repository<Answer>{
     async createAnswer(answerCredentialDto:AnswerCredentialDto){
         const { question_id, content } = answerCredentialDto;
 
-        const answer = this.create({question_id:question_id, content, create_date:new Date});
+        const answer = this.create({question_id, content, create_date:new Date});
 
         try{
             await this.save(answer);
