@@ -2,6 +2,9 @@ import { Controller, Get, Post, Body, Patch, Delete } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { Question } from 'src/entity/question.entity';
 import { QuestionCredentialDto } from './dto/question.credential.dto';
+import { QuestionUpdateCredentialDto } from './dto/question-update.credential.dto';
+import { QuestionDeleteCredentialDto } from './dto/question-delete.credential.dto';
+import { AnswerCredentialDto } from './dto/answer.credential.dto';
 
 @Controller('question')
 export class QuestionController {
@@ -22,19 +25,19 @@ export class QuestionController {
         return this.questionService.createQuestion(questionCredentialDto);
     }
 
-    // @Patch('/update')
-    // updateQuestion(){
-    //     return this.questionService.updateQeustion()
-    // }
+    @Patch('/update')
+    updateQuestion(@Body() questionUpdateCredentialDto:QuestionUpdateCredentialDto){
+        return this.questionService.updateQeustion(questionUpdateCredentialDto)
+    }
 
-    // @Delete('/delete')
-    // deleteQuestion(){
+    @Delete('/delete')
+    deleteQuestion(@Body() questionDeleteCredentialDto:QuestionDeleteCredentialDto){
+        return this.questionService.deleteQuestion(questionDeleteCredentialDto);
+    }
 
-    // }
-
-    // @Post('/answer')
-    // answerCreate(){
-
-    // }
+    @Post('/answer')
+    answerCreate(@Body() answerCredentialDto:AnswerCredentialDto){
+        return this.questionService.createAnswer(answerCredentialDto);
+    }
 
 }

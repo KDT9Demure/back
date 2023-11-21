@@ -4,6 +4,9 @@ import { Question } from 'src/entity/question.entity';
 import { AnswerRepository } from 'src/repository/answer.repository';
 import { QuestionRepository } from 'src/repository/question.repository';
 import { QuestionCredentialDto } from './dto/question.credential.dto';
+import { QuestionUpdateCredentialDto } from './dto/question-update.credential.dto';
+import { QuestionDeleteCredentialDto } from './dto/question-delete.credential.dto';
+import { AnswerCredentialDto } from './dto/answer.credential.dto';
 
 @Injectable()
 export class QuestionService {
@@ -31,28 +34,34 @@ export class QuestionService {
         return this.questionRepository.createQuestion(questionCredentialDto)
     }
 
-    // // 문의 수정하기
-    // async updateQeustion():Promise<object>{
+    // 문의 수정하기
+    async updateQeustion(questionUpdateCredentialDto:QuestionUpdateCredentialDto):Promise<object>{
 
-    //     try{
-    //         const {id, user_name, password} = updateUserCrendentialDto;
+        try{
+            const { content, title, secret, id } = questionUpdateCredentialDto;
 
-    //         const salt = await bcrypt.genSalt();
-    //         const hashedPassword = await bcrypt.hash(password, salt);
+            const user = await this.questionRepository.update(id, {content, title, secret});
 
-    //         const user = await this.userRepository.update(id, {user_name, password:hashedPassword});
+            return {result:true}
 
-    //         return {result:true}
+        }catch(err){
+            return {result:false, message:"오류가 발생했습니다. "+ err}
+        }
+    }
 
-    //     }catch(err){
-    //         return {result:false, message:"오류가 발생했습니다. "+ err}
-    //     }
+    // 문의 삭제하기
+    async deleteQuestion(questionDeleteCredentialDto:QuestionDeleteCredentialDto):Promise<object>{
+        try{
+            const { id } = questionDeleteCredentialDto;
+            const question = await this.questionRepository.delete(id);
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false, message:err}
+        }
+    }
 
-    //     return this.questionRepository.update()
-    // }
-
-    // // 문의 삭제하기
-    // async deleteQuestion():Promise<object>{
-    //     return this.questionRepository.delete()
-    // }
+    async createAnswer(answerCredentialDto:AnswerCredentialDto){
+        this.answerRepository.createAnswer(answerCredentialDto);
+    }
 }
