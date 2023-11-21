@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, OneToOne } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn } from "typeorm";
 import { Question } from "./question.entity";
 
 @Entity()
@@ -15,5 +15,6 @@ export class Answer extends BaseEntity{
     create_date:Date;
 
     @OneToOne(type => Question, question => question.answer)
+    @JoinColumn({name:"question_id"})
     question_id:number;
 }
