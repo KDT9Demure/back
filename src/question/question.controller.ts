@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Delete } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { Question } from 'src/entity/question.entity';
 import { QuestionCredentialDto } from './dto/question.credential.dto';
@@ -21,5 +21,20 @@ export class QuestionController {
     createQuestion(@Body() questionCredentialDto:QuestionCredentialDto):Promise<object>{
         return this.questionService.createQuestion(questionCredentialDto);
     }
+
+    // @Patch('/update')
+    // updateQuestion(){
+    //     return this.questionService.updateQeustion()
+    // }
+
+    // @Delete('/delete')
+    // deleteQuestion(){
+
+    // }
+
+    // @Post('/answer')
+    // answerCreate(){
+
+    // }
 
 }

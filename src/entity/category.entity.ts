@@ -10,7 +10,7 @@ export class Category extends BaseEntity{
     id: string;
 
     // @PrimaryColumn()
-    @ManyToOne(()=>Goods,(goods)=>goods.categories)
+    @ManyToOne(()=>Goods,(goods)=>goods.categories, {eager:true})
     @JoinColumn({ name: 'goods_id' })
-    goods_id: Goods
+    goods_id: string
 }
