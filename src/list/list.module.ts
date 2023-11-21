@@ -4,9 +4,10 @@ import {CategoryRepository} from "../repository/category.repository";
 import {GoodsRepository} from "../repository/goods.repository";
 import {ListController} from "./list.controller";
 import {ListService} from "./list.service";
+import { Category } from "src/entity/category.entity";
 
 @Module({
-  imports:[TypeOrmModule.forFeature([CategoryRepository,GoodsRepository])],
+  imports:[TypeOrmModule.forFeature([CategoryRepository,GoodsRepository, Category])],
   controllers: [ListController],
   providers: [ListService,CategoryRepository,GoodsRepository]
 })

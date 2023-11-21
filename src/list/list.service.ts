@@ -6,7 +6,16 @@ import {Category} from "../entity/category.entity";
 let goodsArr =[];
 @Injectable()
 export class ListService{
-    constructor(private categoryRepository: CategoryRepository, private goodsRepository:GoodsRepository) {}
+    constructor(
+        // @InjectRepository(CategoryRepository)
+        // private categoryRepository: CategoryRepository) {}
+        @InjectRepository(Category) private readonly categoryRepository: Repository<Category> 
+    ) {}
+
+    async getGoodsByCategory(category : string, page:number ): Promise<Category[]>{
+
+        console.log("page", page, "category", category);
+
 
     async getGoodsByCategory(category : string, page:number  ): Promise<Category[]>{
         const categories = await this.categoryRepository.find({
