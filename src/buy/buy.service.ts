@@ -6,6 +6,8 @@ import { OrderCredentialDto } from './dto/order.credential.dto';
 import { AddressCredentialDto } from './dto/address.credential.dto';
 import { AddressUpdateCredentialDto } from './dto/address-update.credential.dto';
 import { GoodsRepository } from 'src/repository/goods.repository';
+import { GoodsGetCredentialDto } from './dto/goods-get.credential.dto';
+import { AddressGetCredentialDto } from './dto/address-get.credential.dto';
 
 @Injectable()
 export class BuyService {
@@ -20,20 +22,32 @@ export class BuyService {
         private readonly goodsReposiry:GoodsRepository,
     ){}
 
-    async getGoods(goodsArray:any){
-        console.log(goodsArray.goodsArray);
-        let temp = goodsArray.goodsArray.split(',');
+    async getGoods(goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
         let arr = [];
-        for(let i = 0; i < temp.length; i++){
-            const goods =  await this.goodsReposiry.findOne({where:{id:temp[i]}});
-            arr.push(goods);
+        try{
+            const {goods_ids} = goodsGetCredentialDto;
+            let temp = goods_ids.split(',');
+            
+            for(let i = 0; i < temp.length; i++){
+                const goods =  await this.goodsReposiry.findOne({where:{id:temp[i]}});
+                arr.push(goods);
+            }
+        }catch(err){
+            console.log(err);
         }
-
-        console.log(arr);
+        return {result:true, data:arr};
     }
 
-    async getAddress(){
+    async getAddress(addressGetCredentialDto:AddressGetCredentialDto):Promise<object>{
 
+        const {user_id} = addressGetCredentialDto;
+        let address = [];
+        try{
+            address =  await this.addressRepository.find({where:{user_id}});
+        }catch(err){
+            console.log(err);
+        }
+        return {result:true, data:address}
     }
 
     async createOrder(orderArray:[]){
