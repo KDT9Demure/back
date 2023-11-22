@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CategoryRepository } from 'src/repository/category.repository';
 import { GoodsRepository } from 'src/repository/goods.repository';
 import {Goods} from "../entity/goods.entity";
 
@@ -11,8 +10,8 @@ export class SearchService {
         private goodsRepository:GoodsRepository,
     ){}
 
-    async getGoodsBySearch(q:string,page:number,sort:string):Promise<Goods[]>{
-        console.log(q,page,sort)
+    async getGoodsBySearch(q:string,page:number,sort:string,color:string):Promise<Goods[]>{
+        let good;
         const order: { [key: string]: 'ASC' | 'DESC' } = {};
         if (sort === "low") {
             order['price'] = 'ASC';
@@ -23,15 +22,19 @@ export class SearchService {
         } else if(sort === undefined){
             order['count'] = 'DESC'
         }
-        const goods = await this.goodsRepository
+        const goods =  this.goodsRepository
             .createQueryBuilder('goods')
-            .where('type_name like :name', {name: `%${q}%` })
             .orderBy(order)
             .skip((page - 1) * 20)
             .take(20)
-            .getMany();
-        return goods
+
+        if(color != undefined){
+            good = await goods.where('type_name like :name AND color like :color', {name: `%${q}%`, color: `%${color}%` })
+                .getMany();
+        }else{
+            good = await goods.where('type_name like :name ', {name: `%${q}%` })
+                .getMany()
+        }
+        return good
     }
-
-
 }
