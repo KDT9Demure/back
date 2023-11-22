@@ -1,6 +1,8 @@
 import { Controller, Post, Get, Patch, Delete, Body, Param, Query } from '@nestjs/common';
 import { BuyService } from './buy.service';
 import { OrderCredentialDto } from './dto/order.credential.dto';
+import { AddressCredentialDto } from './dto/address.credential.dto';
+import { AddressUpdateCredentialDto } from './dto/address-update.credential.dto';
 
 @Controller('buy')
 export class BuyController {
@@ -9,8 +11,13 @@ export class BuyController {
     ){}
 
     @Get('/goods/get')
-    getGoods(){
+    getGoods(@Query() goodsArray:string){
+        this.buyService.getGoods(goodsArray)
+    }
 
+    @Get('/address/get')
+    getAddress(){
+        this.buyService.getAddress()
     }
 
     @Post('')
@@ -19,18 +26,18 @@ export class BuyController {
     }
 
     @Post('/address/add')
-    createAddress(){
-
+    createAddress(@Body() addressCredentialDto:AddressCredentialDto){
+        return this.buyService.createAddress(addressCredentialDto);
     }
 
     @Patch('/address/update')
-    updateAddress(){
-
+    updateAddress(@Body() addressUpdateCredentialDto:AddressUpdateCredentialDto){
+        return this.buyService.updateAddress(addressUpdateCredentialDto);
     }
 
     @Delete('/address/delete')
-    deleteAddress(){
-
+    deleteAddress(@Body() id:number){
+        return this.buyService.deleteAddress(id);
     }
 
 
