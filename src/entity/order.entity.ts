@@ -1,5 +1,5 @@
 import { User } from "src/entity/user.entity";
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { Goods } from "./goods.entity";
 
 @Entity()
@@ -31,8 +31,23 @@ export class Order extends BaseEntity{
     delivery_status:string;
 
     @ManyToOne(type=> User, user=>user.orders)
-    user_id:User;
+    @JoinColumn({name:"user_id"})
+
+    @Column()
+    user_id:number;
 
     @ManyToOne(type=> Goods, goods=>goods.orders)
-    goods_id:Goods;
+    @JoinColumn({name:"goods_id"})
+    
+    @Column()
+    goods_id:string;
+
+    @Column()
+    amount:number;
+
+    @Column()
+    price:number;
+
+    @PrimaryColumn()
+    order_count:number;
 }

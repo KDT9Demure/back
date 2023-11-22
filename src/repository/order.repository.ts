@@ -1,5 +1,5 @@
 import { DataSource, EntityRepository, Repository } from "typeorm";
-import { Order } from "../entity/order.entity";
+import { Order } from "src/entity/order.entity";
 
 @EntityRepository(Order)
 export class OrderRepository extends Repository<Order>{
@@ -7,5 +7,36 @@ export class OrderRepository extends Repository<Order>{
         super(Order, dataSource.createEntityManager());
     }
 
-    
+    async createOrder(orderArray:[]){
+
+        console.log(orderArray.length);
+
+        for(let i = 0; i<orderArray.length; i++){
+            const { goods_id, address, payment_type, goods_count, user_id, delivery_memo, delivery_date, delivery_status, amount, price } = orderArray[i];
+            try{
+                const order = this.create({
+                    id:6,
+                    goods_id,
+                    address,
+                    payment_type,
+                    goods_count,
+                    user_id,
+                    delivery_memo,
+                    delivery_date,
+                    delivery_status,
+                    create_date:new Date(),
+                    amount,
+                    price,
+                    order_count:i,
+                })
+        
+                await this.save(order);
+                
+            }catch(err){
+                console.log(err);
+            }
+        }
+
+        return true;
+    }
 }
