@@ -10,7 +10,7 @@ export class SearchController {
     ){}
 
     @Post('/')
-    getGoodsByCategory(@Query('q') q:string, @Body('page')page: number, @Query('sort')sort:string): Promise<Goods[]>{
-        return this.searchService.getGoodsBySearch(q,page,sort);
+    getGoodsByCategory(@Query('q') q:string, @Body('page')page: number, @Query('sort')sort:string,@Query('color')color:string) : Promise<Goods[]>{
+        return this.searchService.getGoodsBySearch(q,page,sort,color);
     }
 }

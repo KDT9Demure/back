@@ -6,13 +6,11 @@ import {InjectRepository} from "@nestjs/typeorm";
 @Injectable()
 export class ListService{
     constructor(
-
         @InjectRepository(CategoryRepository)
         private readonly categoryRepository: Repository<Category>
     ) {}
 
     async getGoodsByCategory(category : string, page:number ,sort:string ): Promise<Category[]>{
-
         const order: { [key: string]: 'ASC' | 'DESC' } = {};
         if (sort === "low") {
             order['goods.price'] = 'ASC';
