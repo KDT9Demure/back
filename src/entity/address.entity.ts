@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 
 @Entity()
@@ -19,5 +19,8 @@ export class Address extends BaseEntity{
     address_name:string;
 
     @ManyToOne(type=> User, user=>user.address)
-    user_id:User;
+    @JoinColumn({name:"user_id"})
+
+    @Column()
+    user_id:number;
 }
