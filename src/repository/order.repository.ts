@@ -9,7 +9,7 @@ export class OrderRepository extends Repository<Order>{
 
     async createOrder(orderArray:[]){
         try{
-            const id = await this.find({order:{id:'DESC'}});
+            const id = await this.find({order:{id:'DESC'}, take:1});
 
             console.log(id);
 
