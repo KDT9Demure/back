@@ -53,6 +53,7 @@ export class QuestionService {
     async deleteQuestion(questionDeleteCredentialDto:QuestionDeleteCredentialDto):Promise<object>{
         try{
             const { id } = questionDeleteCredentialDto;
+            const answer = await this.answerRepository.delete({question_id:id});
             const question = await this.questionRepository.delete(id);
             return {result:true}
         }catch(err){
