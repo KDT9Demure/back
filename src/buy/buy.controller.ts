@@ -3,6 +3,8 @@ import { BuyService } from './buy.service';
 import { OrderCredentialDto } from './dto/order.credential.dto';
 import { AddressCredentialDto } from './dto/address.credential.dto';
 import { AddressUpdateCredentialDto } from './dto/address-update.credential.dto';
+import { GoodsGetCredentialDto } from './dto/goods-get.credential.dto';
+import { AddressGetCredentialDto } from './dto/address-get.credential.dto';
 
 @Controller('buy')
 export class BuyController {
@@ -11,13 +13,13 @@ export class BuyController {
     ){}
 
     @Get('/goods/get')
-    getGoods(@Query() goodsArray:string){
-        this.buyService.getGoods(goodsArray)
+    getGoods(@Query() goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
+        return this.buyService.getGoods(goodsGetCredentialDto)
     }
 
-    @Get('/address/get')
-    getAddress(){
-        this.buyService.getAddress()
+    @Post('/address/get')
+    getAddress(@Body() addressGetCredentialDto:AddressGetCredentialDto):Promise<object>{
+        return this.buyService.getAddress(addressGetCredentialDto)
     }
 
     @Post('')
