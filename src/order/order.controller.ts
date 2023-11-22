@@ -1,9 +1,20 @@
-import { Controller } from '@nestjs/common';
+import {Body, Controller, Delete, Get} from '@nestjs/common';
 import { OrderService } from './order.service';
+import {Order} from "../entity/order.entity";
 
 @Controller('order')
 export class OrderController{
     constructor(
         private orderService:OrderService, 
     ){ }
+
+    @Get('')
+    currentOrder(@Body('id')id:number):Promise<Order[]>{
+        return this.orderService.CurrentOrder(id);
+    }
+    @Delete('/cancel')
+    orderCancel(@Body('id')id:number){
+        return this.orderService.orderCancel(id);
+    }
+
 }
