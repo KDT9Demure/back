@@ -10,9 +10,6 @@ export class OrderRepository extends Repository<Order>{
     async createOrder(orderArray:[]){
         try{
             const id = await this.find({order:{id:'DESC'}, take:1});
-
-            console.log(id);
-
             for(let i = 0; i<orderArray.length; i++){
                 const { goods_id, address, payment_type, goods_count, user_id, delivery_memo, delivery_date, delivery_status, amount, price } = orderArray[i];
                 
