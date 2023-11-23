@@ -4,13 +4,14 @@ import { Order } from "../entity/order.entity";
 import { OrderController } from "./order.controller";
 import { OrderService } from "./order.service";
 import { OrderRepository } from "../repository/order.repository";
+import {GoodsRepository} from "../repository/goods.repository";
 
 @Module({
     imports:[
         TypeOrmModule.forFeature([Order]),
     ],
     controllers:[OrderController],
-    providers:[OrderService, OrderRepository],
+    providers:[OrderService, OrderRepository,GoodsRepository],
     exports:[],
 })
 
