@@ -1,4 +1,4 @@
-import { Controller, Post, Patch, Body } from '@nestjs/common';
+import { Controller, Post, Patch, Body, Get, Query, Param } from '@nestjs/common';
 import { EventService } from './event.service';
 import { EventCredentialDto } from './dto/event.credential.dto';
 import { UserEventCredentialDto } from './dto/user.credential.dto';
@@ -22,15 +22,20 @@ export class EventController {
         return this.eventService.createCoupon(eventCredentialDto);
     }
 
-
-    // 쿠폰 사용 및 취소
+    // 쿠폰 사용
     @Patch('/coupon/use')
     useCoupon(@Body() useCouponCredentialDto:UseCouponCredentialDto){
         return this.eventService.useCoupon(useCouponCredentialDto);
     }
 
+    // 쿠폰 사용 취소
     @Patch('/coupon/cancel')
     cancelCoupon(@Body() useCouponCredentialDto:UseCouponCredentialDto){
         return this.eventService.cancelCoupon(useCouponCredentialDto);
+    }
+
+    @Get('/list')
+    getCategoryList(@Query('query') query:string){
+        return this.eventService.getCategoryList(query);
     }
 }

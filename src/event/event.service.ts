@@ -54,4 +54,16 @@ export class EventService {
             return {result:false}
         }
     }
+
+    async getCategoryList(query:string){
+
+        try{
+            const category = await this.categoryRepository.find({where:{id:query}, take:10});
+            return {result:true, category}
+        }catch(err){
+            console.log(err);
+            return {result:false, message:err}
+        }
+        
+    }
 }
