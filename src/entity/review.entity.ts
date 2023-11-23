@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from "typeorm";
+import {BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, JoinColumn} from "typeorm";
 import { User } from "./user.entity";
 import { Goods } from "./goods.entity";
 
@@ -19,8 +19,14 @@ export class Review extends BaseEntity{
     create_date:Date;
 
     @ManyToOne(type=> User, user=>user.reviews)
-    user_id:User;
+    @JoinColumn({name:'user_id'})
+
+    @Column()
+    user_id:number;
 
     @ManyToOne(type=> Goods, goods=>goods.reviews)
-    goods_id:Goods;
+    @JoinColumn({name:'goods_id'})
+
+    @Column()
+    goods_id:string;
 }
