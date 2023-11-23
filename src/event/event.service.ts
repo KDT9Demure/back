@@ -4,7 +4,7 @@ import { CouponRepository } from 'src/repository/coupon.repository';
 import { CategoryRepository } from 'src/repository/category.repository';
 import { User_couponRepository } from 'src/repository/user_coupon.repository';
 import { EventCredentialDto } from './dto/event.credential.dto';
-import { UserEventCredentialDto } from './dto/user-event.credential.dto';
+import { UserEventCredentialDto } from './dto/user.credential.dto';
 
 @Injectable()
 export class EventService {
