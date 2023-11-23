@@ -9,7 +9,7 @@ export class AnswerRepository extends Repository<Answer>{
         super(Answer, dataSource.createEntityManager());
     }
 
-    async createAnswer(answerCredentialDto:AnswerCredentialDto){
+    async createAnswer(answerCredentialDto:AnswerCredentialDto):Promise<object>{
         const { question_id, content } = answerCredentialDto;
 
         const answer = this.create({question_id, content, create_date:new Date});

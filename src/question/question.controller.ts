@@ -26,17 +26,17 @@ export class QuestionController {
     }
 
     @Patch('/update')
-    updateQuestion(@Body() questionUpdateCredentialDto:QuestionUpdateCredentialDto){
+    updateQuestion(@Body() questionUpdateCredentialDto:QuestionUpdateCredentialDto):Promise<object>{
         return this.questionService.updateQeustion(questionUpdateCredentialDto)
     }
 
     @Delete('/delete')
-    deleteQuestion(@Body() questionDeleteCredentialDto:QuestionDeleteCredentialDto){
+    deleteQuestion(@Body() questionDeleteCredentialDto:QuestionDeleteCredentialDto):Promise<object>{
         return this.questionService.deleteQuestion(questionDeleteCredentialDto);
     }
 
     @Post('/answer')
-    answerCreate(@Body() answerCredentialDto:AnswerCredentialDto){
+    answerCreate(@Body() answerCredentialDto:AnswerCredentialDto):Promise<object>{
         return this.questionService.createAnswer(answerCredentialDto);
     }
 

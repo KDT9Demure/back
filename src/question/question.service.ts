@@ -60,7 +60,7 @@ export class QuestionService {
         }
     }
 
-    async createAnswer(answerCredentialDto:AnswerCredentialDto){
-        this.answerRepository.createAnswer(answerCredentialDto);
+    async createAnswer(answerCredentialDto:AnswerCredentialDto):Promise<object>{
+        return this.answerRepository.createAnswer(answerCredentialDto);
     }
 }
