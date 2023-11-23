@@ -13,6 +13,6 @@ export class QuestionCredentialDto {
     @IsString()
     content:string
 
-    user_id: User;
+    user_id: number;
 
 }

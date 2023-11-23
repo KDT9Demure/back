@@ -24,10 +24,12 @@ export class Question extends BaseEntity{
     @Column()
     answer_status:boolean;
 
-    @OneToOne(type => Answer, answer => answer.question_id)
+    @OneToOne(type => Answer, answer => answer.question_id, {eager:true})
     answer:Answer;
 
-    @ManyToOne(type=> User, user=>user.questions, {eager:true})
+    @ManyToOne(type=> User, user=>user.questions)
     @JoinColumn({name: 'user_id'})
-    user_id:User;
+
+    @Column()
+    user_id:number;
 }
