@@ -39,9 +39,7 @@ export class QuestionService {
 
         try{
             const { content, title, secret, id } = questionUpdateCredentialDto;
-
             const user = await this.questionRepository.update(id, {content, title, secret});
-
             return {result:true}
 
         }catch(err){

@@ -50,9 +50,6 @@ export class Goods extends BaseEntity{
 
     @OneToMany(()=>Review, review=>review.goods_id)
     reviews:Review[];
-
-    @OneToMany(()=>User_coupon, user_coupon=>user_coupon.goods_id)
-    user_coupons:User_coupon[];
 }
 
 
