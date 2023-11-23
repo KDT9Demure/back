@@ -2,6 +2,7 @@ import { Controller, Post, Patch, Body } from '@nestjs/common';
 import { EventService } from './event.service';
 import { EventCredentialDto } from './dto/event.credential.dto';
 import { UserEventCredentialDto } from './dto/user.credential.dto';
+import { UseCouponCredentialDto } from './dto/use-coupon.credential.dto';
 
 @Controller('event')
 export class EventController {
@@ -24,7 +25,12 @@ export class EventController {
 
     // 쿠폰 사용 및 취소
     @Patch('/coupon/use')
-    useCoupon(){
+    useCoupon(@Body() useCouponCredentialDto:UseCouponCredentialDto){
+        return this.eventService.useCoupon(useCouponCredentialDto);
+    }
 
+    @Patch('/coupon/cancel')
+    cancelCoupon(@Body() useCouponCredentialDto:UseCouponCredentialDto){
+        return this.eventService.cancelCoupon(useCouponCredentialDto);
     }
 }

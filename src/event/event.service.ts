@@ -5,6 +5,7 @@ import { CategoryRepository } from 'src/repository/category.repository';
 import { User_couponRepository } from 'src/repository/user_coupon.repository';
 import { EventCredentialDto } from './dto/event.credential.dto';
 import { UserEventCredentialDto } from './dto/user.credential.dto';
+import { UseCouponCredentialDto } from './dto/use-coupon.credential.dto';
 
 @Injectable()
 export class EventService {
@@ -25,5 +26,32 @@ export class EventService {
 
     createCoupon(eventCredentialDto:EventCredentialDto):Promise<object>{
         return this.couponRepository.createCoupon(eventCredentialDto);
+    }
+
+    async useCoupon(useCouponCredentialDto:UseCouponCredentialDto){
+
+        const {id} = useCouponCredentialDto;
+
+        try{
+            await this.user_couponRepository.update(id, {use:false});
+
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
+    }
+
+    async cancelCoupon(useCouponCredentialDto:UseCouponCredentialDto){
+        const {id} = useCouponCredentialDto;
+
+        try{
+            await this.user_couponRepository.update(id, {use:true});
+
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
     }
 }
