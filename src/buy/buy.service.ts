@@ -10,6 +10,8 @@ import { AddressGetCredentialDto } from './dto/address-get.credential.dto';
 import { D_payRepository } from 'src/repository/d_pay.repository';
 import { DpayCredentialDto } from './dto/dpay.credential.dto';
 import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
+import {UserRepository} from "../repository/user.repository";
+import {User} from "../entity/user.entity";
 
 @Injectable()
 export class BuyService {
@@ -25,6 +27,10 @@ export class BuyService {
 
         @InjectRepository(D_payRepository)
         private readonly d_payRepository:D_payRepository,
+         
+        @InjectRepository(UserRepository)
+        private readonly userRepository:UserRepository,
+
     ){}
 
     async getGoods(goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
@@ -34,7 +40,7 @@ export class BuyService {
             let temp = goods_ids.split(',');
             
             for(let i = 0; i < temp.length; i++){
-                const goods =  await this.goodsReposiry.findOne({where:{id:temp[i]}});
+                const goods =  await this.goodsRepository.findOne({where:{id:temp[i]}});
                 arr.push(goods);
             }
         }catch(err){
@@ -56,7 +62,34 @@ export class BuyService {
     }
 
     async createOrder(orderArray:[]){
-        this.orderRepository.createOrder(orderArray)
+        try{
+            let order;
+            const id = await this.orderRepository.find({order:{id:'DESC'}, take:1});
+            for(let i = 0; i<orderArray.length; i++){
+                const { goods_id, address, payment_type, goods_count, user_id, delivery_memo, delivery_date, delivery_status, amount, price } = orderArray[i];
+                    order = this.orderRepository.create({
+                    id:id[0].id+1,
+                    goods_id,
+                    address,
+                    payment_type,
+                    goods_count,
+                    user_id,
+                    delivery_memo,
+                    delivery_date,
+                    delivery_status,
+                    create_date:new Date(),
+                    amount,
+                    price,
+                    order_count:i,
+                })
+                await this.orderRepository.save(order);
+            }
+            const userP = await this.userRepository.findOne({where:{id:order.user_id}})
+            const userPoint = await this.userRepository.update({id:order.user_id},{point:(order.amount/20)+userP.point})
+        }catch(err){
+            console.log(err);
+        }
+        return true;
     }
 
     async createAddress(addressCredentialDto:AddressCredentialDto){
