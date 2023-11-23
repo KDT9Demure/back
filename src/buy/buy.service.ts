@@ -23,7 +23,7 @@ export class BuyService {
         private readonly addressRepository:AddressRepository,
 
         @InjectRepository(GoodsRepository)
-        private readonly goodsReposiry:GoodsRepository,
+        private readonly goodsRepository:GoodsRepository,
 
         @InjectRepository(D_payRepository)
         private readonly d_payRepository:D_payRepository,
@@ -143,6 +143,7 @@ export class BuyService {
         }catch(err){
             console.log(err);
             return {result:false}
+            
         }
     }
     
