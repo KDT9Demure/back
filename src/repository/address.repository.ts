@@ -8,7 +8,7 @@ export class AddressRepository extends Repository<Address>{
         super(Address, dataSource.createEntityManager());
     }
 
-    async createAddress(addressCredentialDto:AddressCredentialDto){
+    async createAddress(addressCredentialDto:AddressCredentialDto):Promise<object>{
 
         const { address, detail, zip_code, user_id, address_name } = addressCredentialDto;
 

@@ -61,6 +61,17 @@ export class QuestionService {
     }
 
     async createAnswer(answerCredentialDto:AnswerCredentialDto):Promise<object>{
-        return this.answerRepository.createAnswer(answerCredentialDto);
+        const { question_id, content } = answerCredentialDto;
+
+        const answer = this.answerRepository.create({question_id, content, create_date:new Date});
+
+        try{
+            await this.answerRepository.save(answer);
+            await this.questionRepository.update(question_id, {answer_status:true})
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
     }
 }

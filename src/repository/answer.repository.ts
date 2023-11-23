@@ -8,18 +8,4 @@ export class AnswerRepository extends Repository<Answer>{
     constructor(private readonly dataSource:DataSource){
         super(Answer, dataSource.createEntityManager());
     }
-
-    async createAnswer(answerCredentialDto:AnswerCredentialDto):Promise<object>{
-        const { question_id, content } = answerCredentialDto;
-
-        const answer = this.create({question_id, content, create_date:new Date});
-
-        try{
-            await this.save(answer);
-            return {result:true}
-        }catch(err){
-            console.log(err);
-        }
-        
-    }
 }
