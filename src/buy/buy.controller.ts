@@ -5,6 +5,8 @@ import { AddressCredentialDto } from './dto/address.credential.dto';
 import { AddressUpdateCredentialDto } from './dto/address-update.credential.dto';
 import { GoodsGetCredentialDto } from './dto/goods-get.credential.dto';
 import { AddressGetCredentialDto } from './dto/address-get.credential.dto';
+import { DpayCredentialDto } from './dto/dpay.credential.dto';
+import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
 
 @Controller('buy')
 export class BuyController {
@@ -42,5 +44,18 @@ export class BuyController {
         return this.buyService.deleteAddress(id);
     }
 
+    @Post('/dpay/add')
+    createDpay(@Body() dpayCredentialDto:DpayCredentialDto){
+        return this.buyService.createDpay(dpayCredentialDto);
+    }
 
+    @Get('/dpay')
+    getDpay(@Query('user') user:number){
+        return this.buyService.getDpay(user);
+    }
+
+    @Delete('/dpay/delete')
+    deleteDpay(@Body() dpayDeleteCredentialDto:DpayDeleteCredentialDto){
+        return this.buyService.deleteDpay(dpayDeleteCredentialDto);
+    }
 }

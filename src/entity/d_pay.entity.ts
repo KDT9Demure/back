@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "./user.entity";
 
 @Entity()
@@ -12,10 +12,9 @@ export class D_pay extends BaseEntity{
     @Column()
     card_number:string;
 
-    @Column()
-    card_password:string;
-
-    // user_id 조인
     @ManyToOne(type=> User, user=>user.d_pays)
-    user_id:User;
+    @JoinColumn({name:"user_id"})
+
+    @Column()
+    user_id:number;
 }
