@@ -29,7 +29,7 @@ export class MailService {
             from: '',
             subject: 'Demure 인증메일',
             text: '',
-            html: verifyNumber,
+            html: `디뮤어 인증번호 입니다. \n${verifyNumber}`,
         })
       return {result:true, verifyNumber};
     }catch(err){

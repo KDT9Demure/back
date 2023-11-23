@@ -1,7 +1,7 @@
 import { Controller, Post, Patch, Body } from '@nestjs/common';
 import { EventService } from './event.service';
 import { EventCredentialDto } from './dto/event.credential.dto';
-import { UserEventCredentialDto } from './dto/user-event.credential.dto';
+import { UserEventCredentialDto } from './dto/user.credential.dto';
 
 @Controller('event')
 export class EventController {
@@ -11,7 +11,7 @@ export class EventController {
 
     // 쿠폰 저장
     @Post('/coupon')
-    createUserCoupon(userEventCredentialDto:UserEventCredentialDto):Promise<object>{
+    createUserCoupon(@Body() userEventCredentialDto:UserEventCredentialDto):Promise<object>{
         return this.eventService.createUserCoupon(userEventCredentialDto);
     }
 
