@@ -11,14 +11,17 @@ import { Question } from "src/entity/question.entity";
 import { Review } from "src/entity/review.entity";
 import { User_coupon } from "src/entity/user_coupon.entity";
 import { Category } from "src/entity/category.entity";
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export const typeORMConfig : TypeOrmModuleOptions = {
     type:'postgres',
-    host:'demure.culickc0o7pc.ap-southeast-2.rds.amazonaws.com',
+    host:process.env.DB_HOST,
     port:5432,
-    username:'postgres',
-    password:'pyjsok5253!',
-    database:'demure',
+    username:process.env.DB_USERNAME,
+    password:process.env.DB_PASSWORD,
+    database:process.env.DB_DATABASE,
     entities:[__dirname + '../**/*.entity.{js, ts}', User, Goods, Order, Coupon, Address, Answer, Cart, D_pay, Question, Review, User_coupon, Category],
     synchronize: false,
     logging:true,
