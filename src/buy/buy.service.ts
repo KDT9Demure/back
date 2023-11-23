@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddressRepository } from 'src/repository/address.repository';
 import { OrderRepository } from 'src/repository/order.repository';
-import { OrderCredentialDto } from './dto/order.credential.dto';
 import { AddressCredentialDto } from './dto/address.credential.dto';
 import { AddressUpdateCredentialDto } from './dto/address-update.credential.dto';
 import { GoodsRepository } from 'src/repository/goods.repository';
 import { GoodsGetCredentialDto } from './dto/goods-get.credential.dto';
 import { AddressGetCredentialDto } from './dto/address-get.credential.dto';
+import { D_payRepository } from 'src/repository/d_pay.repository';
+import { DpayCredentialDto } from './dto/dpay.credential.dto';
+import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
 
 @Injectable()
 export class BuyService {
@@ -20,6 +22,9 @@ export class BuyService {
 
         @InjectRepository(GoodsRepository)
         private readonly goodsReposiry:GoodsRepository,
+
+        @InjectRepository(D_payRepository)
+        private readonly d_payRepository:D_payRepository,
     ){}
 
     async getGoods(goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
@@ -74,6 +79,33 @@ export class BuyService {
     async deleteAddress(id:number){
         try{
             const address_res = await this.addressRepository.delete(id);
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
+    }
+
+    async createDpay(dpayCredentialDto:DpayCredentialDto){
+        return this.d_payRepository.createDpay(dpayCredentialDto);
+    }
+
+    async getDpay(user:number){
+        console.log(user);
+        try{
+            const dpay = await this.d_payRepository.find({where:{user_id:user}});
+            return {result:true, dpay}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
+        
+    }
+
+    async deleteDpay(dpayDeleteCredentialDto:DpayDeleteCredentialDto){
+        const {id} = dpayDeleteCredentialDto;
+        try{
+            const dpay = await this.d_payRepository.delete(id);
             return {result:true}
         }catch(err){
             console.log(err);
