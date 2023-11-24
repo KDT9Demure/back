@@ -5,10 +5,10 @@ import {IsNull} from "typeorm";
 
 export class CartCredentialDto {
 
-    user_id: User;
+    user_id: number;
 
     // @IsString()
-    goods_id: Goods;
+    goods_id: string;
 
     @IsNumber()
     goods_count: number

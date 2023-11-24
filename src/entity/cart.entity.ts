@@ -13,10 +13,14 @@ export class Cart extends BaseEntity{
     // user_id 조인
     @ManyToOne(type=> User, user=>user.carts)
     @JoinColumn({name: 'user_id'})
-    user_id:User;
+
+    @Column()
+    user_id:number;
 
     // goods_id 조인
     @ManyToOne(type=> Goods, goods=>goods.carts)
     @JoinColumn({name:'goods_id'})
-    goods_id:Goods;
+
+    @Column()
+    goods_id:string;
 }
