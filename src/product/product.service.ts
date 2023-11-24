@@ -19,11 +19,11 @@ export class ProductService{
         return goodsInfo;
     }
 
-    async writeReview(reviewCredentialDto:ReviewCredentialDto):Promise<boolean>{
+    async writeReview(reviewCredentialDto:ReviewCredentialDto):Promise<object>{
         return this.reviewRepository.writeReview(reviewCredentialDto)
     }
 
-    async reviewVerify(user_id:number, goods_id:string):Promise<boolean>{
+    async reviewVerify(user_id:number, goods_id:string):Promise<object>{
         const user = await this.orderRepository
             .createQueryBuilder('order')
             .where('order.user_id = :user AND order.goods_id = :goods AND order.delivery_status = :d',{user:user_id,goods:goods_id,d:"배송완료"} )
@@ -35,12 +35,12 @@ export class ProductService{
                 .getOne()
             console.log("r",review, "d",user.delivery_status)
             if(!review){
-                return true;
+                return {result: true};
             }else{
-                return false;
+                return {result: false};
             }
         }else{
-            return false
+            return {result: false}
         }
 
     }
