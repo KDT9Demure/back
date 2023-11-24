@@ -1,4 +1,4 @@
-import { Controller, Post, Body, ValidationPipe, UseGuards, Patch, Delete } from '@nestjs/common';
+import {Controller, Post, Body, ValidationPipe, UseGuards, Patch, Delete, Query, Get} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCrendentialDto } from './dto/auth.credential.dto';
 import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
@@ -51,4 +51,8 @@ export class AuthController {
         return this.authService.deleteUser(id);
     }
 
+    @Get('/kakao-login')
+    kakaoLogin(@Query('code') code: string) {
+        return this.authService.kakaoLogin(code);
+    }
 }
