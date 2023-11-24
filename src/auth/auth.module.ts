@@ -11,6 +11,7 @@ import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailModule } from './mail.module';
+import {HttpModule} from "@nestjs/axios";
 
 
 @Module({
@@ -23,10 +24,10 @@ import { MailModule } from './mail.module';
       }
     }),
     TypeOrmModule.forFeature([User]),
-    MailModule
+    MailModule,HttpModule
   ],
   controllers: [AuthController],
   providers: [AuthService, UserRepository, JwtStrategy],
-  exports:[JwtStrategy, PassportModule]
+  exports:[JwtStrategy, PassportModule,HttpModule]
 })
 export class AuthModule {}

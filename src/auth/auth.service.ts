@@ -8,6 +8,8 @@ import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { UserRepository } from 'src/repository/user.repository';
 import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 import * as dotenv from 'dotenv';
+import {firstValueFrom} from "rxjs";
+import {HttpService} from "@nestjs/axios";
 
 dotenv.config();
 
@@ -17,7 +19,8 @@ export class AuthService {
     constructor(
         @InjectRepository(UserRepository)
         private userRepository:UserRepository,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private readonly httpService:HttpService
     ){}
 
 
@@ -95,6 +98,10 @@ export class AuthService {
         &redirect_url=${KAKAO_REDIRECT_URL}
         &code=${code}`;
         console.log(kakao_api_url, KAKAO_CLIENT_ID,KAKAO_REDIRECT_URL)
+        const token_res = await firstValueFrom(this.httpService.post(kakao_api_url));
+        const access_token: string = token_res.data.access_token;
+        console.log(token_res)
+        return token_res.data
     }
 
 

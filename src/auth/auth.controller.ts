@@ -51,8 +51,9 @@ export class AuthController {
         return this.authService.deleteUser(id);
     }
 
-    @Get('/kakao-login')
-    kakaoLogin(@Query('code') code: string) {
+    @Post('/kakao/code')
+    kakaoLogin(@Body('code') code: string) {
+        console.log(code)
         return this.authService.kakaoLogin(code);
     }
 }
