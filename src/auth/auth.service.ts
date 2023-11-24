@@ -7,14 +7,19 @@ import { AuthLoginCrendentialDto } from './dto/login.credential.dto';
 import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { UserRepository } from 'src/repository/user.repository';
 import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Injectable()
 export class AuthService {
+
     constructor(
         @InjectRepository(UserRepository)
         private userRepository:UserRepository,
         private jwtService: JwtService
     ){}
+
 
     async signUp(authCrendentialDto:AuthCrendentialDto):Promise<object>{
         return this.userRepository.createUser(authCrendentialDto);
@@ -78,5 +83,19 @@ export class AuthService {
             return {result:false, message:"오류가 발생했습니다. " + err};
         }
     }
+
+
+    async kakaoLogin(code:string){
+        console.log(process.env.KAKAO_APIKEY)
+        const KAKAO_CLIENT_ID = process.env.KAKAO_APIKEY
+        const KAKAO_REDIRECT_URL = process.env.REDIRECT_URI
+        const kakao_api_url = `https://kauth.kakao.com/oauth/token
+        ?grant_type=authorization_code
+        &client_id=${KAKAO_CLIENT_ID}
+        &redirect_url=${KAKAO_REDIRECT_URL}
+        &code=${code}`;
+        console.log(kakao_api_url, KAKAO_CLIENT_ID,KAKAO_REDIRECT_URL)
+    }
+
 
 }

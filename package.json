@@ -36,6 +36,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "handlebars": "^4.7.8",
+    "kakao": "^0.4.1",
     "nodemailer": "^6.9.7",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
