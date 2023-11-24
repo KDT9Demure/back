@@ -12,12 +12,12 @@ export class ProductController{
     }
 
     @Post('/review')
-    writeReview(@Body()reviewCredentialDto:ReviewCredentialDto):Promise<boolean>{
+    writeReview(@Body()reviewCredentialDto:ReviewCredentialDto):Promise<object>{
         return this.productService.writeReview(reviewCredentialDto)
     }
 
     @Post('/review/verify')
-    reviewVerify(@Body('user_id')user_id: number,@Body('goods_id') goods_id:string):Promise<boolean>{
+    reviewVerify(@Body('user_id')user_id: number,@Body('goods_id') goods_id:string):Promise<object>{
         return this.productService.reviewVerify(user_id,goods_id)
     }
 

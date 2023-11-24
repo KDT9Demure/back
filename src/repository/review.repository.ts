@@ -8,7 +8,7 @@ export class ReviewRepository extends Repository<Review>{
         super(Review, dataSource.createEntityManager());
     }
 
-    async writeReview(reviewCredentialDto: ReviewCredentialDto):Promise<boolean>{
+    async writeReview(reviewCredentialDto: ReviewCredentialDto):Promise<object>{
         const {user_id, goods_id, rate,content} = reviewCredentialDto;
         const review = this.create({
             user_id,goods_id,rate,content,
@@ -16,10 +16,10 @@ export class ReviewRepository extends Repository<Review>{
         })
         try {
             await this.save(review);
-            return true;
+            return {result :true};
         }catch (e){
             console.log(e)
-            return false;
+            return { result: false};
         }
     }
 
