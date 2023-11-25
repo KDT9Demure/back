@@ -48,7 +48,7 @@ export class Goods extends BaseEntity{
     @OneToMany(()=>Order, order=>order.goods_id)
     orders:Order[];
 
-    @OneToMany(()=>Review, review=>review.goods_id)
+    @OneToMany(()=>Review, review=>review.goods_id, {eager:true})
     reviews:Review[];
 }
 
