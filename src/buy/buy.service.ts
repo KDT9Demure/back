@@ -12,6 +12,7 @@ import { DpayCredentialDto } from './dto/dpay.credential.dto';
 import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
 import {UserRepository} from "../repository/user.repository";
 import {User} from "../entity/user.entity";
+import { CartRepository } from 'src/repository/cart.repository';
 
 @Injectable()
 export class BuyService {
@@ -31,17 +32,20 @@ export class BuyService {
         @InjectRepository(UserRepository)
         private readonly userRepository:UserRepository,
 
+        @InjectRepository(CartRepository)
+        private readonly cartRepository:CartRepository
+
     ){}
 
     async getGoods(goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
         let arr = [];
         try{
-            const {goods_ids} = goodsGetCredentialDto;
-            let temp = goods_ids.split(',');
+            const {cart_ids} = goodsGetCredentialDto;
+            let temp = cart_ids.split(',');
             
             for(let i = 0; i < temp.length; i++){
-                const goods =  await this.goodsRepository.findOne({where:{id:temp[i]}});
-                arr.push(goods);
+                const carts =  await this.cartRepository.findOne({where:{id:Number(temp[i])}});
+                arr.push(carts);
             }
         }catch(err){
             console.log(err);
