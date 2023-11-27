@@ -11,6 +11,8 @@ import * as dotenv from 'dotenv';
 import {firstValueFrom} from "rxjs";
 import {HttpService} from "@nestjs/axios";
 import axios from "axios";
+import {UserStatus} from "./status/user.status.enum";
+import {User} from "../entity/user.entity";
 
 
 dotenv.config();
@@ -91,28 +93,54 @@ export class AuthService {
 
 
     async kakaoLogin(code:string){
-        console.log(process.env.KAKAO_APIKEY)
         const KAKAO_CLIENT_ID = process.env.KAKAO_APIKEY
         const KAKAO_REDIRECT_URL = process.env.REDIRECT_URI
-        const kakao_api_url = `https://kauth.kakao.com/oauth/token
-        ?grant_type=authorization_code
-        &client_id=${KAKAO_CLIENT_ID}
-        &redirect_url=${KAKAO_REDIRECT_URL}
-        &code=${code}`;
-        console.log(kakao_api_url, KAKAO_CLIENT_ID,KAKAO_REDIRECT_URL)
-        const token_res = await axios.post(kakao_api_url);
-        const access_token: string = token_res.data.access_token;
-        console.log(token_res)
+
+        const result = await axios({
+            method: "POST",
+            url: "https://kauth.kakao.com/oauth/token",
+            headers: {
+                "content-type": "application/x-www-form-urlencoded",
+            },
+            data: {
+                grant_type: "authorization_code",
+                client_id: KAKAO_CLIENT_ID,
+                redirect_uri: KAKAO_REDIRECT_URL,
+                code: code,
+            },
+        })
         const user_ifo = await
             axios.get('https://kapi.kakao.com/v2/user/me', {
                 headers: {
-                    Authorization: `Bearer ${access_token}`
+                    Authorization: `Bearer ${result.data.access_token}`
                 },
             });
         const user_id: string = user_ifo.data.id;
-        console.log(user_id)
-        return token_res.data
+        const user_name:string = user_ifo.data.kakao_account.profile.nickname;
+        const email:string = user_ifo.data.kakao_account.email;
+        let user = await this.userRepository.findOne({where:{userid:user_id}})
+        const password = "jasdbfksbdfm"
+        console.log(user)
+        if(!user){
+            const user_info:User = this.userRepository.create({
+                userid : user_id,
+                user_name: user_name,
+                email: email,
+                password: password,
+                grade: UserStatus.NORMAL,
+                point: 0
+            })
+            try{
+                this.userRepository.save(user_info)
+                user = await this.userRepository.findOne({where:{userid:user_id}})
+            }catch (e) {
+                console.log(e)
+            }
+        }
+
+        const payload = { user_id, id:user.id };
+        const accessToken = await this.jwtService.sign(payload)
+
+        return {result:true, accessToken};
     }
-
-
 }
