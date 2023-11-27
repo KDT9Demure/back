@@ -10,6 +10,8 @@ import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 import * as dotenv from 'dotenv';
 import {firstValueFrom} from "rxjs";
 import {HttpService} from "@nestjs/axios";
+import axios from "axios";
+
 
 dotenv.config();
 
@@ -98,9 +100,17 @@ export class AuthService {
         &redirect_url=${KAKAO_REDIRECT_URL}
         &code=${code}`;
         console.log(kakao_api_url, KAKAO_CLIENT_ID,KAKAO_REDIRECT_URL)
-        const token_res = await firstValueFrom(this.httpService.post(kakao_api_url));
+        const token_res = await axios.post(kakao_api_url);
         const access_token: string = token_res.data.access_token;
         console.log(token_res)
+        const user_ifo = await
+            axios.get('https://kapi.kakao.com/v2/user/me', {
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+            });
+        const user_id: string = user_ifo.data.id;
+        console.log(user_id)
         return token_res.data
     }
 
