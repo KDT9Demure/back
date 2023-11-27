@@ -22,4 +22,15 @@ export class CartService {
     async deleteCart(id: number):Promise<object>{
         return this.cartRepository.deleteCart(id)
     }
+
+    async updateCart(id:number,optionCount:number):Promise<object>{
+        try{
+            const cart = this.cartRepository.update({id:id},{goods_count:optionCount})
+            return {result:true}
+        }catch (e) {
+            console.log(e)
+            return {result:false}
+        }
+
+    }
 }
