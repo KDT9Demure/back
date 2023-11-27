@@ -12,8 +12,14 @@ export class CartController {
         return this.cartService.addCart(cartCredentialDto)
     }
 
+    @Post('/user')
+    getCart(@Body('user_id') user_id:number):Promise<object>{
+        return this.cartService.getCart(user_id);
+    }
+
     @Delete('/delete')
     delteCart(@Body() id: number):Promise<object>{
         return this.cartService.deleteCart(id)
     }
+
 }
