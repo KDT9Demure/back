@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Patch, Post} from '@nestjs/common';
 import { CartService } from './cart.service';
 import {CartCredentialDto} from "./dto/cart.credential.dto";
 
@@ -18,8 +18,13 @@ export class CartController {
     }
 
     @Delete('/delete')
-    delteCart(@Body() id: number):Promise<object>{
+    deleteCart(@Body() id: number):Promise<object>{
         return this.cartService.deleteCart(id)
+    }
+
+    @Patch('/update')
+    cartUpdate(@Body()id:number, @Body()objectCount:number):Promise<object>{
+        return this.cartService.updateCart(id,objectCount)
     }
 
 }
