@@ -14,6 +14,11 @@ export class CartService {
         return this.cartRepository.addCart(cartCredentialDto);
     }
 
+    async getCart(user_id:number):Promise<object>{
+        const cart = await this.cartRepository.find({where:{user_id}});
+        return {result:true, cart};
+    }
+
     async deleteCart(id: number):Promise<object>{
         return this.cartRepository.deleteCart(id)
     }
