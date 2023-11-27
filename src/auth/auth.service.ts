@@ -13,6 +13,13 @@ import {HttpService} from "@nestjs/axios";
 import axios from "axios";
 import {UserStatus} from "./status/user.status.enum";
 import {User} from "../entity/user.entity";
+import {OrderRepository} from "../repository/order.repository";
+import {AddressRepository} from "../repository/address.repository";
+import {ReviewRepository} from "../repository/review.repository";
+import {D_payRepository} from "../repository/d_pay.repository";
+import {CartRepository} from "../repository/cart.repository";
+import {User_couponRepository} from "../repository/user_coupon.repository";
+import {QuestionRepository} from "../repository/question.repository";
 
 
 dotenv.config();
@@ -24,7 +31,28 @@ export class AuthService {
         @InjectRepository(UserRepository)
         private userRepository:UserRepository,
         private jwtService: JwtService,
-        private readonly httpService:HttpService
+        private readonly httpService:HttpService,
+
+        @InjectRepository(OrderRepository)
+        private readonly orderRepository:OrderRepository,
+
+        @InjectRepository(AddressRepository)
+        private readonly addressRepository:AddressRepository,
+
+        @InjectRepository(ReviewRepository)
+        private readonly reviewRepository:ReviewRepository,
+
+        @InjectRepository(D_payRepository)
+        private readonly d_payRepository:D_payRepository,
+
+        @InjectRepository(CartRepository)
+        private readonly cartRepository:CartRepository,
+
+        @InjectRepository(User_couponRepository)
+        private readonly user_couponRepository:User_couponRepository,
+
+        @InjectRepository(QuestionRepository)
+        private readonly questionRepository:QuestionRepository
     ){}
 
 
@@ -83,6 +111,14 @@ export class AuthService {
 
     async deleteUser(id:number):Promise<object>{
         try{
+
+            const address = await this.addressRepository.delete({user_id:id})
+            const question = await this.questionRepository.delete({user_id:id})
+            const order = await this.orderRepository.delete({user_id:id})
+            const coupon = await this.user_couponRepository.delete({user_id:id})
+            const review = await this.reviewRepository.delete({user_id:id})
+            const d_pay = await this.d_payRepository.delete({user_id:id})
+            const cart = await this.cartRepository.delete({user_id:id})
             const user = await this.userRepository.delete(id);
             return {result:true}
         }catch(err){
