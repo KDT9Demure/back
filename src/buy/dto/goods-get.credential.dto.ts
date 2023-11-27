@@ -3,6 +3,5 @@ import { IsString } from "class-validator";
 
 export class GoodsGetCredentialDto {
     @IsString()
-    goods_ids:string;
-
+    cart_ids:string;
 }
