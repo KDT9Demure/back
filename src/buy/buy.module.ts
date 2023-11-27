@@ -12,13 +12,14 @@ import {User} from "../entity/user.entity";
 import {UserRepository} from "../repository/user.repository";
 import { D_pay } from 'src/entity/d_pay.entity';
 import { D_payRepository } from 'src/repository/d_pay.repository';
+import {CartRepository} from "../repository/cart.repository";
 
 @Module({
   imports:[
     TypeOrmModule.forFeature([Order, Address, Goods, D_pay, User]),
   ],
   controllers: [BuyController],
-  providers: [BuyService, OrderRepository, AddressRepository, GoodsRepository, D_payRepository, UserRepository]
+  providers: [BuyService, OrderRepository, AddressRepository, GoodsRepository, D_payRepository, UserRepository,CartRepository]
 
 })
 export class BuyModule {}
