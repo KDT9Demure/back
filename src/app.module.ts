@@ -12,12 +12,13 @@ import { BuyModule } from './buy/buy.module';
 import { CartModule } from './cart/cart.module';
 import { QuestionModule } from './question/question.module';
 import {HttpModule} from "@nestjs/axios";
+import { ProfileModule } from './profile/profile.module';
 
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeORMConfig),
-    AuthModule, ProductModule, OrderModule, EventModule, ListModule, SearchModule, BuyModule, CartModule, QuestionModule, HttpModule],
+    AuthModule, ProductModule, OrderModule, EventModule, ListModule, SearchModule, BuyModule, CartModule, QuestionModule, HttpModule, ProfileModule],
   controllers: [],
   providers: [],
 })
