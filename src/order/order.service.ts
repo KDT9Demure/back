@@ -34,7 +34,6 @@ export class OrderService{
             if(orderD.length === 0){
                 return {result:false}
             }else{
-                // const orderDelete = await this.orderRepository.remove(orderD);
                 return {result:true}
             }
         }catch (e) {

@@ -12,11 +12,6 @@ export class CartRepository extends Repository<Cart>{
 
     async addCart(cartCredentialDto: CartCredentialDto):Promise<object>{
         const {user_id, goods_id, goods_count} = cartCredentialDto;
-        console.log(typeof user_id,typeof goods_id,typeof goods_count)
-        console.log(typeof user_id)
-        const user = await this.dataSource.getRepository(User).findOne({ where: { id: Number(user_id) } });
-        const goods = await this.dataSource.getRepository(Goods).findOne({ where: { id: String(goods_id) } });
-        console.log(user,goods)
         const cart= this.create({
             user_id: user_id,
             goods_count: goods_count,

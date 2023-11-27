@@ -14,6 +14,7 @@ import {UserRepository} from "../repository/user.repository";
 import {User} from "../entity/user.entity";
 import { CartRepository } from 'src/repository/cart.repository';
 
+
 @Injectable()
 export class BuyService {
     constructor(
@@ -68,10 +69,11 @@ export class BuyService {
     async createOrder(orderArray:[]){
         try{
             let order;
+            let usePoint = 0;
             const id = await this.orderRepository.find({order:{id:'DESC'}, take:1});
             for(let i = 0; i<orderArray.length; i++){
-                const { goods_id, address, payment_type, goods_count, user_id, delivery_memo, delivery_date, delivery_status, amount, price } = orderArray[i];
-                    order = this.orderRepository.create({
+                const { goods_id, address, payment_type, goods_count, user_id, delivery_memo, delivery_date, delivery_status, amount, price,use_point } = orderArray[i];
+                order = this.orderRepository.create({
                     id:id[0].id+1,
                     goods_id,
                     address,
@@ -86,10 +88,13 @@ export class BuyService {
                     price,
                     order_count:i,
                 })
+                usePoint = use_point
                 await this.orderRepository.save(order);
+                const cartDelete = await this.cartRepository
+                    .delete({goods_id:goods_id,user_id:user_id})
             }
             const userP = await this.userRepository.findOne({where:{id:order.user_id}})
-            const userPoint = await this.userRepository.update({id:order.user_id},{point:(order.amount/20)+userP.point})
+            const userPoint = await this.userRepository.update({id:order.user_id},{point:(order.amount/20)+userP.point-usePoint})
         }catch(err){
             console.log(err);
         }
