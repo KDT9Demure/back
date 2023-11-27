@@ -19,8 +19,8 @@ export class CartService {
         return {result:true, cart};
     }
 
-    async deleteCart(id: number):Promise<object>{
-        return this.cartRepository.deleteCart(id)
+    async deleteCart(id: number[]):Promise<object>{
+        return this.cartRepository.deleteCart(id);
     }
 
     async updateCart(id:number,optionCount:number):Promise<object>{

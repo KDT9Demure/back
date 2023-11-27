@@ -18,8 +18,8 @@ export class CartController {
     }
 
     @Delete('/delete')
-    deleteCart(@Body() id: number):Promise<object>{
-        return this.cartService.deleteCart(id)
+    deleteCart(@Body('id') id: number[]):Promise<object>{
+        return this.cartService.deleteCart(id);
     }
 
     @Patch('/update')

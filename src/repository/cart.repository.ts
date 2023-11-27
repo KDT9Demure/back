@@ -22,9 +22,9 @@ export class CartRepository extends Repository<Cart>{
     }
 
 
-    async deleteCart(id:number):Promise<object>{
+    async deleteCart(id:number[]):Promise<object>{
         try {
-            const cart = await this.delete(id)
+            const cart = await this.delete(id);
             return {result:true}
         }
         catch (error){
