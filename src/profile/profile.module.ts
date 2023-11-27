@@ -17,10 +17,13 @@ import {CouponRepository} from "../repository/coupon.repository";
 import {D_payRepository} from "../repository/d_pay.repository";
 import {QuestionRepository} from "../repository/question.repository";
 import {OrderRepository} from "../repository/order.repository";
+import {AddressRepository} from "../repository/address.repository";
+import {User_coupon} from "../entity/user_coupon.entity";
+import {User_couponRepository} from "../repository/user_coupon.repository";
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Cart,User,Coupon,Address,D_pay,Review,Question,Order])],
+  imports:[TypeOrmModule.forFeature([Cart,User,User_coupon,Address,D_pay,Review,Question,Order])],
   controllers: [ProfileController],
-  providers: [ProfileService,CartRepository,UserRepository,CouponRepository,D_payRepository,ReviewRepository,QuestionRepository,OrderRepository]
+  providers: [ProfileService,CartRepository,UserRepository,CouponRepository,D_payRepository,ReviewRepository,QuestionRepository,OrderRepository,AddressRepository,User_couponRepository]
 })
 export class ProfileModule {}
