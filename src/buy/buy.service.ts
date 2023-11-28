@@ -34,7 +34,7 @@ export class BuyService {
         private readonly userRepository:UserRepository,
 
         @InjectRepository(CartRepository)
-        private readonly cartRepository:CartRepository
+        private readonly cartRepository:CartRepository,
 
     ){}
 
@@ -154,6 +154,17 @@ export class BuyService {
             return {result:false}
             
         }
+    }
+
+    async updateDefaultAddress(id:number):Promise<object>{
+        try {
+            const defaultAddress = this.addressRepository.update({id:id},{default_address:true})
+            return {result:true}
+        }catch (e) {
+            console.log(e)
+            return {result:false}
+        }
+
     }
     
 }

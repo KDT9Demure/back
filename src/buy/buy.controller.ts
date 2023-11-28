@@ -58,4 +58,9 @@ export class BuyController {
     deleteDpay(@Body() dpayDeleteCredentialDto:DpayDeleteCredentialDto){
         return this.buyService.deleteDpay(dpayDeleteCredentialDto);
     }
+
+    @Patch('address/default')
+    updateDefaultAddress(@Body('id')id:number ){
+        return this.buyService.updateDefaultAddress(id)
+    }
 }
