@@ -23,4 +23,7 @@ export class Address extends BaseEntity{
 
     @Column()
     user_id:number;
+
+    @Column()
+    default_address: boolean
 }
