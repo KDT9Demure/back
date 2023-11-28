@@ -1,10 +1,11 @@
 import { Review } from "src/entity/review.entity";
 import { DataSource, EntityRepository, Repository } from "typeorm";
 import {ReviewCredentialDto} from "../product/dto/review.credential.dto";
+import {GoodsRepository} from "./goods.repository";
 
 @EntityRepository(Review)
 export class ReviewRepository extends Repository<Review>{
-    constructor(private readonly dataSource:DataSource){
+    constructor(private readonly dataSource:DataSource,private goodsRepository:GoodsRepository){
         super(Review, dataSource.createEntityManager());
     }
 
@@ -16,6 +17,8 @@ export class ReviewRepository extends Repository<Review>{
         })
         try {
             await this.save(review);
+            const goods = await this.goodsRepository.findOne({where:{id:goods_id}})
+            const rateUpdate = await this.goodsRepository.update({id:goods_id},{rate:goods.rate+rate})
             return {result :true};
         }catch (e){
             console.log(e)

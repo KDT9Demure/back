@@ -173,7 +173,7 @@ export class AuthService {
                 console.log(e)
             }
         }
-
+        console.log("!@",user)
         const payload = { user_id, id:user.id };
         const accessToken = await this.jwtService.sign(payload)
 
