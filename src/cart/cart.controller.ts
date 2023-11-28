@@ -23,7 +23,7 @@ export class CartController {
     }
 
     @Patch('/update')
-    cartUpdate(@Body()id:number, @Body()objectCount:number):Promise<object>{
+    cartUpdate(@Body('id') id:number, @Body('objectCount')objectCount:number):Promise<object>{
         return this.cartService.updateCart(id,objectCount)
     }
 
