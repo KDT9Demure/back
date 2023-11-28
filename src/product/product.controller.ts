@@ -7,7 +7,7 @@ import {ReviewCredentialDto} from "./dto/review.credential.dto";
 export class ProductController{
     constructor(private productService: ProductService) {}
     @Get('/:id')
-    getGoods(@Param('id') id: string):Promise<Goods>{
+    getGoods(@Param('id') id: string):Promise<object>{
         return this.productService.getGoods(id)
     }
 

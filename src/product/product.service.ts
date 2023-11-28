@@ -12,11 +12,11 @@ export class ProductService{
                  private orderRepository:OrderRepository
     ) {}
 
-    async getGoods(productId : string): Promise<Goods>{
+    async getGoods(productId : string): Promise<object>{
         const goodsInfo = await this.goodsRepository.findOne({
             where: { id: productId },
         });
-        return goodsInfo;
+        return {goodsInfo:goodsInfo, avg: goodsInfo.rate/goodsInfo.count};
     }
 
     async writeReview(reviewCredentialDto:ReviewCredentialDto):Promise<object>{

@@ -39,6 +39,9 @@ export class Goods extends BaseEntity{
     @Column()
     count: number;
 
+    @Column()
+    rate: number;
+
     @OneToMany(()=>Category,(category)=>category.goods_id)
     categories : Category[];
 
