@@ -8,7 +8,7 @@ export class OrderController{
         private orderService:OrderService, 
     ){ }
 
-    @Get('')
+    @Get('/:id')
     currentOrder(@Param('id') id:number):Promise<Order[]>{
         return this.orderService.CurrentOrder(id);
     }
