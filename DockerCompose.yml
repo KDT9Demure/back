@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  backend:
+    container_name: app_backend
+    image: 276943966330.dkr.ecr.us-east-2.amazonaws.com/demure
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/svr/app
+      - /svr/app/node_modules
+
+networks:
+  backend:
+    driver: bridge
