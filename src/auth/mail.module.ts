@@ -3,6 +3,8 @@ import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import * as dotenv from 'dotenv';
+import { UserRepository } from 'src/repository/user.repository';
+import { User } from 'src/entity/user.entity';
 
 dotenv.config();
 
@@ -27,9 +29,9 @@ dotenv.config();
           strict: true,
         },
       },
-    }),
+    }), User
   ],
-  providers: [MailService],
+  providers: [MailService, UserRepository],
   exports:[MailService]
 })
 

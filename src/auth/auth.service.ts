@@ -93,6 +93,18 @@ export class AuthService {
         }   
     }
 
+    // 비밀번호 제외하고 업데이트
+    async updateUserNonePassword(id:number, user_name:string){
+        try{
+            const user = await this.userRepository.update(id, {user_name});
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false, message:"오류가 발생했습니다. "+ err}
+        }
+    }
+
+    // 비밀번호도 함께 업데이트
     async updateUser(updateUserCrendentialDto:UpdateUserCrendentialDto):Promise<object>{
         try{
             const {id, user_name, password} = updateUserCrendentialDto;
@@ -178,5 +190,44 @@ export class AuthService {
         const accessToken = await this.jwtService.sign(payload)
 
         return {result:true, accessToken};
+    }
+
+    async profilePasswordCheck(userid:string, password:string){
+        try{
+            const user = await this.userRepository.findOne({where:{userid}});
+
+            if(user && (await bcrypt.compare(password, user.password))){
+                return {result:true};
+            }
+            else{
+                return {result:false, message:"비밀번호가 틀립니다."}
+            }
+        }catch(err){
+            console.log(err);
+            return {result:false, message:"오류가 발생했습니다."}
+        }
+    }
+
+    async getProfile(id:number){
+        try{
+            const user = await this.userRepository.findOne({where:{id}});
+            return {result:true, user}
+        }catch(err){
+            console.log(err);
+            return {result:false, message:"오류가 발생했습니다."}
+        }
+    }
+
+    async resetPassword(password:string, id:number){
+        try{
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(password, salt);
+            const user = await this.userRepository.update(id, {password:hashedPassword});
+
+            return {result:true}
+        }catch(err){
+            console.log(err);
+            return {result:false, message:"오류가 발생했습니다."}
+        }
     }
 }
