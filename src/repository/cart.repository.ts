@@ -12,12 +12,18 @@ export class CartRepository extends Repository<Cart>{
 
     async addCart(cartCredentialDto: CartCredentialDto):Promise<object>{
         const {user_id, goods_id, goods_count} = cartCredentialDto;
-        const cart= this.create({
-            user_id: user_id,
-            goods_count: goods_count,
-            goods_id :goods_id
-        })
-        await this.save(cart)
+        console.log(goods_id)
+        try{
+            
+            const cart= this.create({
+                user_id, goods_count, goods_id,
+            })
+            await this.save(cart)
+        }catch(err){
+            console.log(err);
+            return {result : false};
+        }
+        
         return {result: true}
     }
 

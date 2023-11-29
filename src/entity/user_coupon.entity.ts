@@ -17,7 +17,7 @@ export class User_coupon extends BaseEntity{
     @Column()
     user_id:number;
 
-    @OneToOne(type=> Coupon, coupon=>coupon.user_coupons)
+    @OneToOne(type=> Coupon, coupon=>coupon.user_coupons, {eager:true})
     @JoinColumn({name:"coupon_id"})
 
     @Column()
