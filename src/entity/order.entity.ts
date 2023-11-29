@@ -36,7 +36,7 @@ export class Order extends BaseEntity{
     @Column()
     user_id:number;
 
-    @ManyToOne(type=> Goods, goods=>goods.orders)
+    @ManyToOne(type=> Goods, goods=>goods.orders, {eager:true})
     @JoinColumn({name:"goods_id"})
     
     @Column()
