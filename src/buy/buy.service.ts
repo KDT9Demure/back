@@ -42,6 +42,7 @@ export class BuyService {
         let arr = [];
         try{
             const {cart_ids} = goodsGetCredentialDto;
+            console.log(cart_ids);
             let temp = cart_ids.split(',');
             
             for(let i = 0; i < temp.length; i++){

@@ -41,6 +41,21 @@ export class AuthController {
         return this.mailService.sendHello(signupEmailCrendentialDto);
     }
 
+    @Post('/password/find')
+    findPassword(@Body('userid') userid:string, @Body('user_name') user_name:string){
+        return this.mailService.findPassword(userid, user_name);
+    }
+
+    @Patch('/password/find/update')
+    resetPassword(@Body('password') password:string, @Body('id') id:number){
+        return this.authService.resetPassword(password, id);
+    }
+
+    @Patch('/update/nopw')
+    updateUserNonePassword(@Body('id') id:number, @Body('user_name') user_name:string){
+        return this.authService.updateUserNonePassword(id, user_name);
+    }
+
     @Patch('/update')
     updateUser(@Body(ValidationPipe) updateUserCrendentialDto:UpdateUserCrendentialDto):Promise<object>{
         return this.authService.updateUser(updateUserCrendentialDto)
@@ -55,5 +70,15 @@ export class AuthController {
     kakaoLogin(@Body('code') code: string) {
         console.log(code)
         return this.authService.kakaoLogin(code);
+    }
+
+    @Post('/password/check')
+    profilePasswordCheck(@Body('userid') userid:string, @Body('password') password:string){
+        return this.authService.profilePasswordCheck(userid, password);
+    }
+
+    @Post('/profile/get')
+    getProfile(@Body('id') id:number){
+        return this.authService.getProfile(id);
     }
 }
