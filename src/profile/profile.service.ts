@@ -16,6 +16,7 @@ import {Question} from "../entity/question.entity";
 import {Coupon} from "../entity/coupon.entity";
 import {User_couponRepository} from "../repository/user_coupon.repository";
 import {User_coupon} from "../entity/user_coupon.entity";
+import { where } from 'sequelize';
 
 @Injectable()
 export class ProfileService {
@@ -52,12 +53,14 @@ export class ProfileService {
     }
 
     async getOrderInfo(user_id: number):Promise<Order[]>{
-        const order = await this.orderRepository
-            .createQueryBuilder('order')
-            .orderBy({'order.create_date':'DESC'})
-            .where({user_id})
-            .take(3)
-            .getMany()
+
+        const order = await this.orderRepository.find({where:{user_id}, take:3, order:{create_date:"DESC"}});
+        // const order = await this.orderRepository
+        //     .createQueryBuilder('order')
+        //     .orderBy({'order.create_date':'DESC'})
+        //     .where({user_id})
+        //     .take(3)
+        //     .getMany()
         return order;
 
 
