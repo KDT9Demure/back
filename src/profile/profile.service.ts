@@ -16,7 +16,6 @@ import {Question} from "../entity/question.entity";
 import {Coupon} from "../entity/coupon.entity";
 import {User_couponRepository} from "../repository/user_coupon.repository";
 import {User_coupon} from "../entity/user_coupon.entity";
-import { where } from 'sequelize';
 
 @Injectable()
 export class ProfileService {
