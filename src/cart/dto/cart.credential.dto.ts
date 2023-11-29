@@ -7,7 +7,7 @@ export class CartCredentialDto {
 
     user_id: number;
 
-    // @IsString()
+    @IsString()
     goods_id: string;
 
     @IsNumber()
