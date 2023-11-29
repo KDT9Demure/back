@@ -1,28 +1,28 @@
-import {Body, Controller, Get} from '@nestjs/common';
+import {Body, Controller, Get, Post} from '@nestjs/common';
 import {ProfileService} from "./profile.service";
 
 @Controller('profile')
 export class ProfileController {
     constructor(private profileService:ProfileService) {}
 
-    @Get('/user')
+    @Post('/user')
     profile(@Body('user_id') user_id:number){
         return this.profileService.getUserInfo(user_id)
     }
-    @Get('/order')
+    @Post('/order')
     order(@Body('user_id') user_id:number){
         return this.profileService.getOrderInfo(user_id)
     }
-    @Get('/address')
+    @Post('/address')
     address(@Body('user_id') user_id:number){
         return this.profileService.getAddressInfo(user_id)
     }
 
-    @Get('/question')
+    @Post('/question')
     question(@Body('user_id') user_id:number){
         return this.profileService.getQuestionInfo(user_id)
     }
-    @Get('/coupon')
+    @Post('/coupon')
     coupon(@Body('user_id') user_id:number){
         return this.profileService.getCouponInfo(user_id)
     }
