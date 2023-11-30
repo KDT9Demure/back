@@ -61,7 +61,7 @@ export class MailService {
                 text: '',
                 html: `디뮤어 인증번호 입니다. \n${verifyNumber}`,
             })
-            return { result: true, verifyNumber, id:user.id };
+            return { result: true, verifyNumber, id:user.id, email:user.email };
         }catch(err){
             console.log(err);
             return {result:false, message:"오류가 발생했습니다."}
