@@ -91,8 +91,7 @@ export class BuyService {
                 })
                 usePoint = use_point
                 await this.orderRepository.save(order);
-                const cartDelete = await this.cartRepository
-                    .delete({goods_id:goods_id,user_id:user_id})
+                const cartDelete = await this.cartRepository.delete({goods_id:goods_id,user_id:user_id})
             }
             const userP = await this.userRepository.findOne({where:{id:order.user_id}})
             const userPoint = await this.userRepository.update({id:order.user_id},{point:(order.amount/20)+userP.point-usePoint})
