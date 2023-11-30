@@ -40,7 +40,7 @@ export class Order extends BaseEntity{
     @JoinColumn({name:"goods_id"})
     
     @Column()
-    goods_id:string;
+    goods_id:Goods;
 
     @Column()
     amount:number;

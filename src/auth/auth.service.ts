@@ -8,7 +8,6 @@ import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { UserRepository } from 'src/repository/user.repository';
 import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 import * as dotenv from 'dotenv';
-import {firstValueFrom} from "rxjs";
 import {HttpService} from "@nestjs/axios";
 import axios from "axios";
 import {UserStatus} from "./status/user.status.enum";

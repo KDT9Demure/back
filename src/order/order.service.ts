@@ -23,10 +23,9 @@ export class OrderService{
             const orderD = await this.orderRepository.find({where:{id}});
 
             for (let i = 0;i<orderD.length;i++){
-
-                const goods = await this.goodsRepository.findOne({where:{id:orderD[i].goods_id}});
+                const goods = await this.goodsRepository.findOne({where:{id:orderD[i].goods_id.id}});
                 const goodsDelete = await this.goodsRepository.update(
-                    {id:orderD[i].goods_id},
+                    {id:orderD[i].goods_id.id},
                     {count:goods.count-orderD[i].goods_count}
                 );
             }
