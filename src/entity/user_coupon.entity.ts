@@ -1,6 +1,5 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
-import { Goods } from "./goods.entity";
 import { Coupon } from "./coupon.entity";
 
 @Entity()
