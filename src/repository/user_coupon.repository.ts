@@ -22,7 +22,7 @@ export class User_couponRepository extends Repository<User_coupon>{
                 return {result:true}
                 
             }else{
-                return {result:false, message:"이미 발급되었습니다."}
+                return {result:false, message:"이미 발급된 쿠폰입니다."}
             }
         }catch(err){
             console.log(err);
