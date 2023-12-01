@@ -30,7 +30,7 @@ export class BuyController {
     }
 
     @Post('/address/add')
-    createAddress(@Body() addressCredentialDto:AddressCredentialDto){
+    createAddress(@Body() addressCredentialDto:AddressCredentialDto):Promise<object>{
         return this.buyService.createAddress(addressCredentialDto);
     }
 
