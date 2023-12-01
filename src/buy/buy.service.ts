@@ -101,8 +101,8 @@ export class BuyService {
         return true;
     }
 
-    async createAddress(addressCredentialDto:AddressCredentialDto){
-        this.addressRepository.createAddress(addressCredentialDto);
+    async createAddress(addressCredentialDto:AddressCredentialDto):Promise<object>{
+        return this.addressRepository.createAddress(addressCredentialDto);
     }
 
     async updateAddress(addressUpdateCredentialDto:AddressUpdateCredentialDto){
