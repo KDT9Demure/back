@@ -14,14 +14,16 @@ import { D_pay } from 'src/entity/d_pay.entity';
 import { D_payRepository } from 'src/repository/d_pay.repository';
 import { CartRepository } from 'src/repository/cart.repository';
 import { Cart } from 'src/entity/cart.entity';
+import { User_coupon } from 'src/entity/user_coupon.entity';
+import { User_couponRepository } from 'src/repository/user_coupon.repository';
 
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Order, Address, Goods, D_pay, User, Cart]),
+    TypeOrmModule.forFeature([Order, Address, Goods, D_pay, User, Cart, User_coupon]),
   ],
   controllers: [BuyController],
-  providers: [BuyService, OrderRepository, AddressRepository, GoodsRepository, D_payRepository, UserRepository, CartRepository]
+  providers: [BuyService, OrderRepository, AddressRepository, GoodsRepository, D_payRepository, UserRepository, CartRepository, User_couponRepository]
 
 
 })

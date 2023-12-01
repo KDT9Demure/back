@@ -11,8 +11,8 @@ import { D_payRepository } from 'src/repository/d_pay.repository';
 import { DpayCredentialDto } from './dto/dpay.credential.dto';
 import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
 import {UserRepository} from "../repository/user.repository";
-import {User} from "../entity/user.entity";
 import { CartRepository } from 'src/repository/cart.repository';
+import { User_couponRepository } from 'src/repository/user_coupon.repository';
 
 
 @Injectable()
@@ -36,6 +36,9 @@ export class BuyService {
         @InjectRepository(CartRepository)
         private readonly cartRepository:CartRepository,
 
+        @InjectRepository(User_couponRepository)
+        private readonly userCouponRepository:User_couponRepository,
+
     ){}
 
     async getGoods(goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
@@ -53,6 +56,16 @@ export class BuyService {
             console.log(err);
         }
         return {result:true, data:arr};
+    }
+
+    async getCoupon(user_id:number){
+        try{
+            const coupon = await this.userCouponRepository.find({where:{user_id}})
+            return {result:true, coupon}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
     }
 
     async getAddress(addressGetCredentialDto:AddressGetCredentialDto):Promise<object>{
@@ -118,10 +131,12 @@ export class BuyService {
         }
     }
 
-    async deleteAddress(id:number){
+    async deleteAddress(id:number, user_id:number){
         try{
             const address_res = await this.addressRepository.delete(id);
-            return {result:true}
+            const address = await this.addressRepository.find({where:{user_id}});
+
+            return {result:true, address}
         }catch(err){
             console.log(err);
             return {result:false}
