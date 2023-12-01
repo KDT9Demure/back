@@ -24,6 +24,11 @@ export class BuyController {
         return this.buyService.getGoods(goodsGetCredentialDto)
     }
 
+    @Post('/coupon/get')
+    getCoupon(@Body('user_id') user_id:number){
+        return this.buyService.getCoupon(user_id);
+    }
+
     @Post('/address/get')
     getAddress(@Body() addressGetCredentialDto:AddressGetCredentialDto):Promise<object>{
         return this.buyService.getAddress(addressGetCredentialDto)
@@ -45,8 +50,8 @@ export class BuyController {
     }
 
     @Delete('/address/delete')
-    deleteAddress(@Body() id:number){
-        return this.buyService.deleteAddress(id);
+    deleteAddress(@Body('id') id:number, @Body('user_id') user_id:number){
+        return this.buyService.deleteAddress(id, user_id);
     }
 
     @Post('/dpay/add')
