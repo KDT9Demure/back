@@ -13,6 +13,11 @@ export class BuyController {
     constructor(
         private buyService:BuyService,
     ){}
+    @Get('/test')
+    test(){
+        return 'test'
+
+    }
 
     @Get('/goods/get')
     getGoods(@Query() goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
