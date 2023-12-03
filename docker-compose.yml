@@ -1,9 +1,0 @@
-version: '3',
-  services:
-  web:
-    container_name: confident_meitner
-    image: back-docker
-    expose:
-      - 8000
-    ports:
-      - 8000:8000
