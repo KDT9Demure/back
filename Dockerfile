@@ -1,20 +1,34 @@
-FROM node:18-alpine
+# Stage 1: Build NestJS App
+FROM node:18-alpine AS build
 
-# 명령어를 실행할 work directory 생성
-RUN mkdir -p /app
 WORKDIR /app
 
-# 프로젝트 전체를 work directory에 추가
-ADD . /app/
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# 프로젝트에 사용되는 의존성 설치
+# Install dependencies
 RUN npm install
 
-# NEST.JS 빌드
+# Copy the rest of the application code
+COPY . .
+
+# Build the TypeScript code
 RUN npm run build
 
-# PORT(3000) 개방
+# Stage 2: Run the App with a smaller image
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy the build output from the previous stage
+COPY --from=build /app/dist ./dist
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm install --only=production
+
+# Expose the port the app runs on
 EXPOSE 8000
 
-# 서버 실행
-ENTRYPOINT npm run start:prod
+# Command to run the application
+CMD ["npm", "run", "start:prod"]
