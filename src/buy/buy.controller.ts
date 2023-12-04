@@ -44,6 +44,11 @@ export class BuyController {
         return this.buyService.createAddress(addressCredentialDto);
     }
 
+    @Patch('/address/default')
+    updateDefaultAddress(@Body('id') id:number, @Body('user_id') user_id:number){
+        return this.buyService.updateDefaultAddress(id, user_id);
+    }
+
     @Patch('/address/update')
     updateAddress(@Body() addressUpdateCredentialDto:AddressUpdateCredentialDto){
         return this.buyService.updateAddress(addressUpdateCredentialDto);
@@ -67,10 +72,5 @@ export class BuyController {
     @Delete('/dpay/delete')
     deleteDpay(@Body() dpayDeleteCredentialDto:DpayDeleteCredentialDto){
         return this.buyService.deleteDpay(dpayDeleteCredentialDto);
-    }
-
-    @Patch('address/default')
-    updateDefaultAddress(@Body('id')id:number ){
-        return this.buyService.updateDefaultAddress(id)
     }
 }

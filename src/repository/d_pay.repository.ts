@@ -15,7 +15,8 @@ export class D_payRepository extends Repository<D_pay>{
         try{
             const dpay = this.create({user_id, bank_name, card_number})
             await this.save(dpay);
-            return {result:true}
+            const user_dpay = await this.find({where:{user_id}});
+            return {result:true, dpay:user_dpay}
         }catch(err){
             console.log(err);
             return {result:false}
