@@ -60,7 +60,7 @@ export class BuyService {
 
     async getCoupon(user_id:number){
         try{
-            const coupon = await this.userCouponRepository.find({where:{user_id}})
+            const coupon = await this.userCouponRepository.find({where:{user_id, use:true}})
             return {result:true, coupon}
         }catch(err){
             console.log(err);
@@ -73,7 +73,7 @@ export class BuyService {
         const {user_id} = addressGetCredentialDto;
         let address = [];
         try{
-            address =  await this.addressRepository.find({where:{user_id}});
+            address =  await this.addressRepository.find({where:{user_id}, order:{id:"ASC"}});
         }catch(err){
             console.log(err);
         }
@@ -118,6 +118,23 @@ export class BuyService {
         return this.addressRepository.createAddress(addressCredentialDto);
     }
 
+    async updateDefaultAddress(id:number, user_id:number){
+        try{
+            // 기존 기본 배송지 false로 변경
+            const old_res = await this.addressRepository.update({default_address:true, user_id}, {default_address:false});
+
+            // 새 기본 배송지 true로 변경
+            const update_res = await this.addressRepository.update(id, {default_address:true});
+
+            // 새 배송지 목록 가져오기
+            const address = await this.addressRepository.find({where:{user_id}, order:{id:"ASC"}});
+            return {result:true, address}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
+    }
+
     async updateAddress(addressUpdateCredentialDto:AddressUpdateCredentialDto){
         const {detail, address, address_name, user_id, zip_code, id} = addressUpdateCredentialDto;
 
@@ -133,8 +150,14 @@ export class BuyService {
 
     async deleteAddress(id:number, user_id:number){
         try{
+            const res = await this.addressRepository.findOne({where:{id}});
+
+            if(res.default_address === true){
+                return {result:false, message:"기본 배송지는 삭제할 수 없습니다."}
+            }
+
             const address_res = await this.addressRepository.delete(id);
-            const address = await this.addressRepository.find({where:{user_id}});
+            const address = await this.addressRepository.find({where:{user_id}, order:{id:"ASC"}});
 
             return {result:true, address}
         }catch(err){
@@ -169,17 +192,6 @@ export class BuyService {
             return {result:false}
             
         }
-    }
-
-    async updateDefaultAddress(id:number):Promise<object>{
-        try {
-            const defaultAddress = this.addressRepository.update({id:id},{default_address:true})
-            return {result:true}
-        }catch (e) {
-            console.log(e)
-            return {result:false}
-        }
-
     }
     
 }

@@ -22,7 +22,7 @@ export class AddressRepository extends Repository<Address>{
                 await this.save(address_res);
             }
 
-            const addressList = await this.find({where:{user_id}});
+            const addressList = await this.find({where:{user_id}, order:{id:"ASC"}});
 
             return {result:true, addressList}
         }catch(err){
