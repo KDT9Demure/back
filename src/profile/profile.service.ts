@@ -75,7 +75,7 @@ export class ProfileService {
     }
 
     async getCouponInfo(user_id:number):Promise<User_coupon[]>{
-        const coupon = await this.user_couponRepository.find({where:{user_id}})
+        const coupon = await this.user_couponRepository.find({where:{user_id, use:true}})
         return coupon
     }
 
