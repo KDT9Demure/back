@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  app.enableCors();
+  // app.enableCors();
   
   const config = new DocumentBuilder()
     .setTitle('Cats example')

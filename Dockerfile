@@ -1,34 +1,29 @@
-# Stage 1: Build NestJS App
+# Stage 1: Build the Backend App
 FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+COPY .env /app/.env
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
 COPY . .
 
 # Build the TypeScript code
 RUN npm run build
 
-# Stage 2: Run the App with a smaller image
-FROM node:18-alpine
 
-WORKDIR /app
+# Stage 2: Run the Backend App in an Nginx Image
+FROM nginx:alpine
 
-# Copy the build output from the previous stage
-COPY --from=build /app/dist ./dist
-COPY package*.json ./
+COPY . .
+# Copy the Nginx configuration for the backend
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install only production dependencies
-RUN npm install --only=production
+# Copy the built files from the build stage
 
-# Expose the port the app runs on
+
 EXPOSE 8000
 
-# Command to run the application
-CMD ["npm", "run", "start:prod"]
+CMD ["nginx", "-g", "daemon off;"]
