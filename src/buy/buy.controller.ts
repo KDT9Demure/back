@@ -35,7 +35,7 @@ export class BuyController {
     }
 
     @Post('')
-    createOrder(@Body() orderArray:[]){
+    createOrder(@Body('orderArray') orderArray:[]){
         return this.buyService.createOrder(orderArray);
     }
 
