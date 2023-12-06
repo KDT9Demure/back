@@ -9,9 +9,10 @@ import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { MailService } from './mail.service';
 import { SignupEmailCrendentialDto } from './dto/signup-email.credential.dto';
 import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-
-@Controller('api/user')
+@Controller(`${process.env.CONTROLLER_ROUTE}user`)
 export class AuthController {
     constructor(private authService:AuthService, private mailService:MailService){}
 

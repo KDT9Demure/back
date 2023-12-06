@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, Param} from '@nestjs/common';
 import { OrderService } from './order.service';
 import {Order} from "../entity/order.entity";
 
-@Controller('order')
+@Controller(`${process.env.CONTROLLER_ROUTE}order`)
 export class OrderController{
     constructor(
         private orderService:OrderService, 
