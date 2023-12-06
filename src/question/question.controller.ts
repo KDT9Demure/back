@@ -6,7 +6,7 @@ import { QuestionUpdateCredentialDto } from './dto/question-update.credential.dt
 import { QuestionDeleteCredentialDto } from './dto/question-delete.credential.dto';
 import { AnswerCredentialDto } from './dto/answer.credential.dto';
 
-@Controller('question')
+@Controller('api/question')
 export class QuestionController {
     constructor(
         private questionService:QuestionService

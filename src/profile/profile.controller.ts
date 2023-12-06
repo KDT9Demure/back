@@ -1,7 +1,7 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
 import {ProfileService} from "./profile.service";
 
-@Controller('profile')
+@Controller('api/profile')
 export class ProfileController {
     constructor(private profileService:ProfileService) {}
 
