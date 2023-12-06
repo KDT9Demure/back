@@ -3,7 +3,7 @@ import {Goods} from "../entity/goods.entity";
 import {ListService} from "./list.service";
 import {Category} from "../entity/category.entity";
 
-@Controller('list')
+@Controller(`${process.env.CONTROLLER_ROUTE}list`)
 export class ListController{
     constructor(private listService: ListService) {}
     @Post('/:category')
