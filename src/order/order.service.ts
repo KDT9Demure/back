@@ -32,7 +32,6 @@ export class OrderService{
                     {count:goods.count-orderD[i].goods_count}
                 );
             }
-            console.log(orderD.length)
             if(orderD.length === 0){
                 return {result:false}
             }else{
