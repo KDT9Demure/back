@@ -11,7 +11,7 @@ import { SignupEmailCrendentialDto } from './dto/signup-email.credential.dto';
 import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 
 
-@Controller('user')
+@Controller('api/user')
 export class AuthController {
     constructor(private authService:AuthService, private mailService:MailService){}
 

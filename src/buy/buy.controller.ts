@@ -8,16 +8,11 @@ import { AddressGetCredentialDto } from './dto/address-get.credential.dto';
 import { DpayCredentialDto } from './dto/dpay.credential.dto';
 import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
 
-@Controller('buy')
+@Controller('api/buy')
 export class BuyController {
     constructor(
         private buyService:BuyService,
     ){}
-    @Get('/test')
-    test(){
-        return 'test'
-
-    }
 
     @Get('/goods/get')
     getGoods(@Query() goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
