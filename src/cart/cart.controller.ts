@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Patch, Post} from '@nestjs/common';
 import { CartService } from './cart.service';
 import {CartCredentialDto} from "./dto/cart.credential.dto";
 
-@Controller('api/cart')
+@Controller('/api/cart')
 export class CartController {
     constructor(
         private cartService:CartService

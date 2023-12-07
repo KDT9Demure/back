@@ -8,7 +8,7 @@ import { AddressGetCredentialDto } from './dto/address-get.credential.dto';
 import { DpayCredentialDto } from './dto/dpay.credential.dto';
 import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
 
-@Controller('api/buy')
+@Controller('/api/buy')
 export class BuyController {
     constructor(
         private buyService:BuyService,
