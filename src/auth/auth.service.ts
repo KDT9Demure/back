@@ -156,7 +156,6 @@ export class AuthService {
                 code: code,
             },
         })
-        console.log("access",result.data)
         const user_ifo = await
             axios.get('https://kapi.kakao.com/v2/user/me', {
                 headers: {
@@ -187,7 +186,7 @@ export class AuthService {
         }
         const payload = { user_id, id:user.id };
         const accessToken = await this.jwtService.sign(payload,{ expiresIn: '1h' })
-
+        console.log("access",accessToken)
         return {result:true, accessToken};
     }
 
