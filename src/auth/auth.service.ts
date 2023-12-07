@@ -142,12 +142,12 @@ export class AuthService {
     async kakaoLogin(code:string){
         const KAKAO_CLIENT_ID = process.env.KAKAO_APIKEY
         const KAKAO_REDIRECT_URL = process.env.REDIRECT_URI
-
+console.log("code",code)
         const result = await axios({
             method: "POST",
             url: "https://kauth.kakao.com/oauth/token",
             headers: {
-                "content-type": "application/x-www-form-urlencoded",
+                "Content-type": "application/x-www-form-urlencoded",
             },
             data: {
                 grant_type: "authorization_code",
@@ -156,6 +156,7 @@ export class AuthService {
                 code: code,
             },
         })
+        console.log("access",result.data)
         const user_ifo = await
             axios.get('https://kapi.kakao.com/v2/user/me', {
                 headers: {
@@ -184,7 +185,6 @@ export class AuthService {
                 console.log(e)
             }
         }
-        console.log("!@",user)
         const payload = { user_id, id:user.id };
         const accessToken = await this.jwtService.sign(payload)
 

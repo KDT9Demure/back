@@ -107,7 +107,7 @@ export class BuyService {
                 const cartDelete = await this.cartRepository.delete({goods_id:goods_id,user_id:user_id})
             }
             const userP = await this.userRepository.findOne({where:{id:order.user_id}})
-            const userPoint = await this.userRepository.update({id:order.user_id},{point:(order.amount/20) + userP.point - usePoint})
+            const userPoint = await this.userRepository.update({id:order.user_id},{point:Number((order.amount/20) + userP.point - usePoint)})
         }catch(err){
             console.log(err);
             return {result:false, message:"오류가 발생했습니다." + err};
