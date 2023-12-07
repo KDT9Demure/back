@@ -12,7 +12,7 @@ import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-@Controller('/api/user')
+@Controller('user')
 export class AuthController {
     constructor(private authService:AuthService, private mailService:MailService){}
 

@@ -3,7 +3,7 @@ import { SearchService } from './search.service';
 import {Category} from "../entity/category.entity";
 import {Goods} from "../entity/goods.entity";
 
-@Controller('/api/search')
+@Controller('search')
 export class SearchController {
     constructor(
         private searchService:SearchService,

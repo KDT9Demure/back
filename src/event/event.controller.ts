@@ -4,7 +4,7 @@ import { EventCredentialDto } from './dto/event.credential.dto';
 import { UserEventCredentialDto } from './dto/user.credential.dto';
 import { UseCouponCredentialDto } from './dto/use-coupon.credential.dto';
 
-@Controller('/api/event')
+@Controller('event')
 export class EventController {
     constructor(
         private eventService:EventService,
