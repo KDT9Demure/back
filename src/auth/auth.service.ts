@@ -141,8 +141,8 @@ export class AuthService {
 
     async kakaoLogin(code:string){
         const KAKAO_CLIENT_ID = process.env.KAKAO_APIKEY
-        const KAKAO_REDIRECT_URL = process.env.REDIRECT_URI
-console.log("code",code)
+        const KAKAO_REDIRECT_URI = process.env.REDIRECT_URI
+        console.log("code",code)
         const result = await axios({
             method: "POST",
             url: "https://kauth.kakao.com/oauth/token",
@@ -152,7 +152,7 @@ console.log("code",code)
             data: {
                 grant_type: "authorization_code",
                 client_id: KAKAO_CLIENT_ID,
-                redirect_uri: KAKAO_REDIRECT_URL,
+                redirect_uri: KAKAO_REDIRECT_URI,
                 code: code,
             },
         })
