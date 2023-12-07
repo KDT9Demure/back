@@ -5,7 +5,6 @@ import {ReviewRepository} from "../repository/review.repository";
 import {ReviewCredentialDto} from "./dto/review.credential.dto";
 import {UserRepository} from "../repository/user.repository";
 import {OrderRepository} from "../repository/order.repository";
-import { where } from "sequelize";
 @Injectable()
 export class ProductService{
     constructor( private goodsRepository:GoodsRepository,
