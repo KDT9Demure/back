@@ -3,7 +3,7 @@ import {ProductService} from "./product.service";
 import {Goods} from "../entity/goods.entity";
 import {ReviewCredentialDto} from "./dto/review.credential.dto";
 
-@Controller('api/product')
+@Controller('/api/product')
 export class ProductController{
     constructor(private productService: ProductService) {}
     @Get('/:id')
