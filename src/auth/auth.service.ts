@@ -184,9 +184,8 @@ export class AuthService {
                 console.log(e)
             }
         }
-        const payload = { user_id, id:user.id };
+        const payload = { userid:user_id, id:user.id };
         const accessToken = await this.jwtService.sign(payload,{ expiresIn: '1h' })
-        console.log("access",accessToken)
         return {result:true, accessToken};
     }
 
