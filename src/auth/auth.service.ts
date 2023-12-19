@@ -142,7 +142,6 @@ export class AuthService {
     async kakaoLogin(code:string){
         const KAKAO_CLIENT_ID = process.env.KAKAO_APIKEY
         const KAKAO_REDIRECT_URI = process.env.REDIRECT_URI
-        console.log("code",code)
         const result = await axios({
             method: "POST",
             url: "https://kauth.kakao.com/oauth/token",
@@ -167,7 +166,6 @@ export class AuthService {
         const email:string = user_ifo.data.kakao_account.email;
         let user = await this.userRepository.findOne({where:{userid:user_id}})
         const password = "jasdbfksbdfm"
-        console.log(user)
         if(!user){
             const user_info:User = this.userRepository.create({
                 userid : user_id,
