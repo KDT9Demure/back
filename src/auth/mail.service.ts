@@ -25,14 +25,12 @@ export class MailService {
     async sendHello(signupEmailCrendentialDto: SignupEmailCrendentialDto): Promise<object> {
 
         const { useremail } = signupEmailCrendentialDto;
-        console.log(useremail);
-
         const verifyNumber: string = generateRandomString(6);
 
         try {
             const res = await this.mailerService.sendMail({
                 to: useremail,
-                from: '',
+                from: '"No Reply" <no-reply@gmail.com>',
                 subject: 'Demure 인증메일',
                 text: '',
                 html: `디뮤어 인증번호 입니다. \n${verifyNumber}`,
