@@ -30,7 +30,7 @@ export class MailService {
         try {
             const res = await this.mailerService.sendMail({
                 to: useremail,
-                from: '"No Reply" <no-reply@gmail.com>',
+                from: '',
                 subject: 'Demure 인증메일',
                 text: '',
                 html: `디뮤어 인증번호 입니다. \n${verifyNumber}`,
