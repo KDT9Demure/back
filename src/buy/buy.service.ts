@@ -141,7 +141,6 @@ export class BuyService {
 
         try{
             const address_res = await this.addressRepository.update(id, {detail, address, address_name, user_id, zip_code});
-            console.log(address_res);
             return {result:true}
         }catch(err){
             console.log(err);
@@ -172,7 +171,6 @@ export class BuyService {
     }
 
     async getDpay(user:number){
-        console.log(user);
         try{
             const dpay = await this.d_payRepository.find({where:{user_id:user}});
             return {result:true, dpay}
