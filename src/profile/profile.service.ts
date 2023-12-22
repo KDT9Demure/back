@@ -54,12 +54,7 @@ export class ProfileService {
     async getOrderInfo(user_id: number):Promise<Order[]>{
 
         const order = await this.orderRepository.find({where:{user_id}, take:3, order:{create_date:"DESC"}});
-        // const order = await this.orderRepository
-        //     .createQueryBuilder('order')
-        //     .orderBy({'order.create_date':'DESC'})
-        //     .where({user_id})
-        //     .take(3)
-        //     .getMany()
+
         return order;
 
 
