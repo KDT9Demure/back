@@ -48,7 +48,7 @@ export class AuthController {
     }
 
     @Patch('/password/find/update')
-    resetPassword(@Body('password') password:string, @Body('id') id:number){
+    resetPassword(@Body('password') pascdsword:string, @Body('id') id:number){
         return this.authService.resetPassword(password, id);
     }
 
