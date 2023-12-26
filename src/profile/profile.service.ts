@@ -52,12 +52,8 @@ export class ProfileService {
     }
 
     async getOrderInfo(user_id: number):Promise<Order[]>{
-
         const order = await this.orderRepository.find({where:{user_id}, take:3, order:{create_date:"DESC"}});
-
         return order;
-
-
     }
     async getAddressInfo(user_id:number):Promise<Address[]>{
         const address = await this.addressRepository.find({where:{user_id}})
