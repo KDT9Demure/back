@@ -52,17 +52,8 @@ export class ProfileService {
     }
 
     async getOrderInfo(user_id: number):Promise<Order[]>{
-
         const order = await this.orderRepository.find({where:{user_id}, take:3, order:{create_date:"DESC"}});
-        // const order = await this.orderRepository
-        //     .createQueryBuilder('order')
-        //     .orderBy({'order.create_date':'DESC'})
-        //     .where({user_id})
-        //     .take(3)
-        //     .getMany()
         return order;
-
-
     }
     async getAddressInfo(user_id:number):Promise<Address[]>{
         const address = await this.addressRepository.find({where:{user_id}})
@@ -75,7 +66,7 @@ export class ProfileService {
     }
 
     async getCouponInfo(user_id:number):Promise<User_coupon[]>{
-        const coupon = await this.user_couponRepository.find({where:{user_id}})
+        const coupon = await this.user_couponRepository.find({where:{user_id, use:true}})
         return coupon
     }
 

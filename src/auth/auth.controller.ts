@@ -9,7 +9,8 @@ import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { MailService } from './mail.service';
 import { SignupEmailCrendentialDto } from './dto/signup-email.credential.dto';
 import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Controller('user')
 export class AuthController {
@@ -47,7 +48,7 @@ export class AuthController {
     }
 
     @Patch('/password/find/update')
-    resetPassword(@Body('password') password:string, @Body('id') id:number){
+    resetPassword(@Body('password') pascdsword:string, @Body('id') id:number){
         return this.authService.resetPassword(password, id);
     }
 

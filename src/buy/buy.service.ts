@@ -11,8 +11,8 @@ import { D_payRepository } from 'src/repository/d_pay.repository';
 import { DpayCredentialDto } from './dto/dpay.credential.dto';
 import { DpayDeleteCredentialDto } from './dto/dpay-delete.credential.dto';
 import {UserRepository} from "../repository/user.repository";
-import {User} from "../entity/user.entity";
 import { CartRepository } from 'src/repository/cart.repository';
+import { User_couponRepository } from 'src/repository/user_coupon.repository';
 
 
 @Injectable()
@@ -36,6 +36,9 @@ export class BuyService {
         @InjectRepository(CartRepository)
         private readonly cartRepository:CartRepository,
 
+        @InjectRepository(User_couponRepository)
+        private readonly userCouponRepository:User_couponRepository,
+
     ){}
 
     async getGoods(goodsGetCredentialDto:GoodsGetCredentialDto):Promise<object>{
@@ -55,12 +58,22 @@ export class BuyService {
         return {result:true, data:arr};
     }
 
+    async getCoupon(user_id:number){
+        try{
+            const coupon = await this.userCouponRepository.find({where:{user_id, use:true}})
+            return {result:true, coupon}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
+    }
+
     async getAddress(addressGetCredentialDto:AddressGetCredentialDto):Promise<object>{
 
         const {user_id} = addressGetCredentialDto;
         let address = [];
         try{
-            address =  await this.addressRepository.find({where:{user_id}});
+            address =  await this.addressRepository.find({where:{user_id}, order:{id:"ASC"}});
         }catch(err){
             console.log(err);
         }
@@ -91,19 +104,36 @@ export class BuyService {
                 })
                 usePoint = use_point
                 await this.orderRepository.save(order);
-                const cartDelete = await this.cartRepository
-                    .delete({goods_id:goods_id,user_id:user_id})
+                const cartDelete = await this.cartRepository.delete({goods_id:goods_id,user_id:user_id})
             }
             const userP = await this.userRepository.findOne({where:{id:order.user_id}})
-            const userPoint = await this.userRepository.update({id:order.user_id},{point:(order.amount/20)+userP.point-usePoint})
+            const userPoint = await this.userRepository.update({id:order.user_id},{point:Number((order.amount/20) + userP.point - usePoint)})
         }catch(err){
             console.log(err);
+            return {result:false, message:"오류가 발생했습니다." + err};
         }
-        return true;
+        return {result:true};
     }
 
-    async createAddress(addressCredentialDto:AddressCredentialDto){
-        this.addressRepository.createAddress(addressCredentialDto);
+    async createAddress(addressCredentialDto:AddressCredentialDto):Promise<object>{
+        return this.addressRepository.createAddress(addressCredentialDto);
+    }
+
+    async updateDefaultAddress(id:number, user_id:number){
+        try{
+            // 기존 기본 배송지 false로 변경
+            const old_res = await this.addressRepository.update({default_address:true, user_id}, {default_address:false});
+
+            // 새 기본 배송지 true로 변경
+            const update_res = await this.addressRepository.update(id, {default_address:true});
+
+            // 새 배송지 목록 가져오기
+            const address = await this.addressRepository.find({where:{user_id}, order:{id:"ASC"}});
+            return {result:true, address}
+        }catch(err){
+            console.log(err);
+            return {result:false}
+        }
     }
 
     async updateAddress(addressUpdateCredentialDto:AddressUpdateCredentialDto){
@@ -111,7 +141,6 @@ export class BuyService {
 
         try{
             const address_res = await this.addressRepository.update(id, {detail, address, address_name, user_id, zip_code});
-            console.log(address_res);
             return {result:true}
         }catch(err){
             console.log(err);
@@ -119,10 +148,18 @@ export class BuyService {
         }
     }
 
-    async deleteAddress(id:number){
+    async deleteAddress(id:number, user_id:number){
         try{
+            const res = await this.addressRepository.findOne({where:{id}});
+
+            if(res.default_address === true){
+                return {result:false, message:"기본 배송지는 삭제할 수 없습니다."}
+            }
+
             const address_res = await this.addressRepository.delete(id);
-            return {result:true}
+            const address = await this.addressRepository.find({where:{user_id}, order:{id:"ASC"}});
+
+            return {result:true, address}
         }catch(err){
             console.log(err);
             return {result:false}
@@ -134,7 +171,6 @@ export class BuyService {
     }
 
     async getDpay(user:number){
-        console.log(user);
         try{
             const dpay = await this.d_payRepository.find({where:{user_id:user}});
             return {result:true, dpay}
@@ -155,17 +191,6 @@ export class BuyService {
             return {result:false}
             
         }
-    }
-
-    async updateDefaultAddress(id:number):Promise<object>{
-        try {
-            const defaultAddress = this.addressRepository.update({id:id},{default_address:true})
-            return {result:true}
-        }catch (e) {
-            console.log(e)
-            return {result:false}
-        }
-
     }
     
 }

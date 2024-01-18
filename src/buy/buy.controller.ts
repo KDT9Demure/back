@@ -19,19 +19,29 @@ export class BuyController {
         return this.buyService.getGoods(goodsGetCredentialDto)
     }
 
+    @Post('/coupon/get')
+    getCoupon(@Body('user_id') user_id:number){
+        return this.buyService.getCoupon(user_id);
+    }
+
     @Post('/address/get')
     getAddress(@Body() addressGetCredentialDto:AddressGetCredentialDto):Promise<object>{
         return this.buyService.getAddress(addressGetCredentialDto)
     }
 
     @Post('')
-    createOrder(@Body() orderArray:[]){
+    createOrder(@Body('orderArray') orderArray:[]){
         return this.buyService.createOrder(orderArray);
     }
 
     @Post('/address/add')
-    createAddress(@Body() addressCredentialDto:AddressCredentialDto){
+    createAddress(@Body() addressCredentialDto:AddressCredentialDto):Promise<object>{
         return this.buyService.createAddress(addressCredentialDto);
+    }
+
+    @Patch('/address/default')
+    updateDefaultAddress(@Body('id') id:number, @Body('user_id') user_id:number){
+        return this.buyService.updateDefaultAddress(id, user_id);
     }
 
     @Patch('/address/update')
@@ -40,8 +50,8 @@ export class BuyController {
     }
 
     @Delete('/address/delete')
-    deleteAddress(@Body() id:number){
-        return this.buyService.deleteAddress(id);
+    deleteAddress(@Body('id') id:number, @Body('user_id') user_id:number){
+        return this.buyService.deleteAddress(id, user_id);
     }
 
     @Post('/dpay/add')
@@ -57,10 +67,5 @@ export class BuyController {
     @Delete('/dpay/delete')
     deleteDpay(@Body() dpayDeleteCredentialDto:DpayDeleteCredentialDto){
         return this.buyService.deleteDpay(dpayDeleteCredentialDto);
-    }
-
-    @Patch('address/default')
-    updateDefaultAddress(@Body('id')id:number ){
-        return this.buyService.updateDefaultAddress(id)
     }
 }

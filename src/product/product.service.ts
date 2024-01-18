@@ -20,17 +20,17 @@ export class ProductService{
     }
 
     async writeReview(reviewCredentialDto:ReviewCredentialDto):Promise<object>{
-        const {user_id, goods_id, rate,content} = reviewCredentialDto;
-        const review = this.reviewRepository.create({
-            user_id,goods_id,rate,content,
-            create_date: new Date(),
-        })
+        const {user_id, goods_id, rate, content} = reviewCredentialDto;
         try {
+            const review = this.reviewRepository.create({
+                user_id,goods_id,rate,content,
+                create_date: new Date(),
+            })
             await this.reviewRepository.save(review);
             const goods = await this.goodsRepository.findOne({where:{id:goods_id}})
             const rateUpdate = await this.goodsRepository.update({id:goods_id},{rate:goods.rate+rate})
             return {result :true};
-        }catch (e){
+        }catch(e){
             console.log(e)
             return { result: false};
         }

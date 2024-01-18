@@ -21,10 +21,14 @@ export class AddressRepository extends Repository<Address>{
                 const address_res = this.create({address, detail, zip_code, user_id, address_name,default_address:false});
                 await this.save(address_res);
             }
-            return {result:true}
+
+            const addressList = await this.find({where:{user_id}, order:{id:"ASC"}});
+
+            return {result:true, addressList}
         }catch(err){
             console.log(err);
             return {result:false}
         }
+
     }
 }

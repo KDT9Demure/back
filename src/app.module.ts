@@ -1,5 +1,5 @@
 
-import { Module } from '@nestjs/common';
+
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm/dist';
 import { typeORMConfig } from './configs/typeorm.config';
@@ -13,13 +13,14 @@ import { CartModule } from './cart/cart.module';
 import { QuestionModule } from './question/question.module';
 import {HttpModule} from "@nestjs/axios";
 import { ProfileModule } from './profile/profile.module';
-
+import {Module} from "@nestjs/common";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeORMConfig),
-    AuthModule, ProductModule, OrderModule, EventModule, ListModule, SearchModule, BuyModule, CartModule, QuestionModule, HttpModule, ProfileModule],
+    AuthModule, ProductModule, OrderModule, EventModule, ListModule, SearchModule, BuyModule, CartModule, QuestionModule, HttpModule, ProfileModule,
+  ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule{}

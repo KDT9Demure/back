@@ -20,7 +20,7 @@ dotenv.config();
         },
       },
       defaults: {
-        from: 'no-reply@gmail.com',
+        from: '"No Reply" <no-reply@gmail.com>',
       },
       template: {
         dir: __dirname + '/templates',

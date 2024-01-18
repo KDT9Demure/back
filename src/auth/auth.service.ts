@@ -8,7 +8,6 @@ import { AuthUserCrendentialDto } from './dto/userid.credential.dto';
 import { UserRepository } from 'src/repository/user.repository';
 import { UpdateUserCrendentialDto } from './dto/update-user.credential.dto';
 import * as dotenv from 'dotenv';
-import {firstValueFrom} from "rxjs";
 import {HttpService} from "@nestjs/axios";
 import axios from "axios";
 import {UserStatus} from "./status/user.status.enum";
@@ -67,7 +66,7 @@ export class AuthService {
 
         if(user && (await bcrypt.compare(password, user.password))){
             const payload = { userid, id:user.id };
-            const accessToken = await this.jwtService.sign(payload)
+            const accessToken = await this.jwtService.sign(payload, { expiresIn: '1h' })
 
             return {result:true, accessToken};
         }
@@ -142,18 +141,17 @@ export class AuthService {
 
     async kakaoLogin(code:string){
         const KAKAO_CLIENT_ID = process.env.KAKAO_APIKEY
-        const KAKAO_REDIRECT_URL = process.env.REDIRECT_URI
-
+        const KAKAO_REDIRECT_URI = process.env.REDIRECT_URI
         const result = await axios({
             method: "POST",
             url: "https://kauth.kakao.com/oauth/token",
             headers: {
-                "content-type": "application/x-www-form-urlencoded",
+                "Content-type": "application/x-www-form-urlencoded",
             },
             data: {
                 grant_type: "authorization_code",
                 client_id: KAKAO_CLIENT_ID,
-                redirect_uri: KAKAO_REDIRECT_URL,
+                redirect_uri: KAKAO_REDIRECT_URI,
                 code: code,
             },
         })
@@ -168,7 +166,6 @@ export class AuthService {
         const email:string = user_ifo.data.kakao_account.email;
         let user = await this.userRepository.findOne({where:{userid:user_id}})
         const password = "jasdbfksbdfm"
-        console.log(user)
         if(!user){
             const user_info:User = this.userRepository.create({
                 userid : user_id,
@@ -185,10 +182,8 @@ export class AuthService {
                 console.log(e)
             }
         }
-        console.log("!@",user)
-        const payload = { user_id, id:user.id };
-        const accessToken = await this.jwtService.sign(payload)
-
+        const payload = { userid:user_id, id:user.id };
+        const accessToken = await this.jwtService.sign(payload,{ expiresIn: '1h' })
         return {result:true, accessToken};
     }
 
