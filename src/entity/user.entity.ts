@@ -10,7 +10,7 @@ import { User_coupon } from "./user_coupon.entity";
 
 @Entity()
 @Unique(['userid'])
-export class User extends BaseEntity{
+export class User{
     @PrimaryGeneratedColumn()
     id:number;
 

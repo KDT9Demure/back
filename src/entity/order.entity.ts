@@ -3,7 +3,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, Pr
 import { Goods } from "./goods.entity";
 
 @Entity()
-export class Order extends BaseEntity{
+export class Order{
     @PrimaryColumn()
     id:number;
 

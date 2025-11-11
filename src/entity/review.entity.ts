@@ -3,7 +3,7 @@ import { User } from "./user.entity";
 import { Goods } from "./goods.entity";
 
 @Entity()
-export class Review extends BaseEntity{
+export class Review{
     @PrimaryGeneratedColumn()
     id:number;
 

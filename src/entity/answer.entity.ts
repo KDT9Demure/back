@@ -2,7 +2,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, O
 import { Question } from "./question.entity";
 
 @Entity()
-export class Answer extends BaseEntity{
+export class Answer{
     @PrimaryGeneratedColumn()
     id:number;
 

@@ -2,7 +2,7 @@ import {BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn} from "
 import {Goods} from "./goods.entity";
 
 @Entity({name: 'category'})
-export class Category extends BaseEntity{
+export class Category{
     @Column()
     name: string;
 

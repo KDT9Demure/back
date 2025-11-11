@@ -3,7 +3,7 @@ import { User } from "./user.entity";
 import { Coupon } from "./coupon.entity";
 
 @Entity()
-export class User_coupon extends BaseEntity{
+export class User_coupon{
     @PrimaryGeneratedColumn()
     id:number;
 

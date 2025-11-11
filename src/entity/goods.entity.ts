@@ -8,7 +8,7 @@ import { User_coupon } from "./user_coupon.entity";
 
 
 @Entity()
-export class Goods extends BaseEntity{
+export class Goods{
     @PrimaryColumn()
     id: string;
 
